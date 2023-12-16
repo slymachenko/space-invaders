@@ -1,7 +1,7 @@
 # CUSTOM MODULES
 from src.utils import constants as const
 from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
-from src.modules.nodes.rects.texture_rects.Button import Button
+from src.modules.nodes.rects.texture_rects.buttons.PlayButton import PlayButton
 
 # ABSTRACT
 from src.abstracts.scenes.Scene import Scene
@@ -76,7 +76,7 @@ class MainMenuScene(Scene):
         
         # play button
         self.nodes.append(
-            Button(
+            PlayButton(
                 self.renderer,
                 self.input_handler,
                 self.updater,

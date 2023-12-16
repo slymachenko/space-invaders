@@ -19,7 +19,7 @@ class Game:
     def __init__(self):
         self.renderer = Renderer(screen_width, screen_height, fps)
         self.input_handler = InputHandler()
-        self.updater = Updater()
+        self.updater = Updater(self)
         self.current_scene = MainMenuScene(self.renderer, self.input_handler, self.updater)
 
     def switch_scene(self, new_scene : Scene) -> None:

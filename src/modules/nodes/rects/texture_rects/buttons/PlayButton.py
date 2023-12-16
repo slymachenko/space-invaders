@@ -2,9 +2,9 @@ import pygame
 # CUSTOM MODULES
 from src.utils import constants as const
 
+# ABSTRACTS
 from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
-from src.abstracts.Inputable import Inputable
-from src.abstracts.Updateable import Updateable
+from src.abstracts.nodes.rects.texture_rects.buttons.Button import Button
 
 # TYPES
 from src.core.Renderer import Renderer
@@ -13,12 +13,13 @@ from src.core.Updater import Updater
 from pygame.rect import Rect
 
 
-class Button(StaticTextureRect, Inputable, Updateable):
+class PlayButton(StaticTextureRect, Button):
     rect : Rect
 
     def __init__(self, renderer : Renderer, input_handler : InputHandler, updater: Updater, x : int, y : int, width : int, height : int, path : str, rect_mode : int = const.CORNER, wrap_mode : int = const.CORNER):
         super().__init__(renderer, x, y, width, height, path, rect_mode, wrap_mode)
         self.input_handler = input_handler
+        self.updater = updater
         self.rect = self.img.get_rect()
         self.rect.topleft = (self.x, self.y)
 
