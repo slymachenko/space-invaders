@@ -1,7 +1,7 @@
 # CUSTOM MODULES
 from src.utils import constants as const
 from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
-from src.modules.nodes.rects.texture_rects.buttons.PlayButton import PlayButton
+from src.modules.nodes.rects.texture_rects.entities.PlayerEntity import PlayerEntity
 
 # ABSTRACT
 from src.abstracts.scenes.Scene import Scene
@@ -12,7 +12,7 @@ from src.core.Renderer import Renderer
 from src.core.InputHandler import InputHandler
 from src.core.Updater import Updater
 
-class MainMenuScene(Scene):
+class PlayScene(Scene):
     nodes : list[Node]
 
     def __init__(self, renderer: Renderer, input_handler: InputHandler, updater: Updater):
@@ -59,32 +59,18 @@ class MainMenuScene(Scene):
                 "assets/bg_floor.png"
             )
         )
-        
-        # title
+
+        # player entity
         self.nodes.append(
-            StaticTextureRect(
-                self.renderer,
-                self.renderer.screen_width * 0.5, # 50% screen width
-                self.renderer.screen_height * 0.3, # 30% screen height
-                400, 
-                200, 
-                "assets/title.png",
-                rect_mode=const.CENTER,
-                wrap_mode=const.CLAMP
-            )
-        )
-        
-        # play button
-        self.nodes.append(
-            PlayButton(
+            PlayerEntity(
                 self.renderer,
                 self.input_handler,
                 self.updater,
-                self.renderer.screen_width * 0.5, # 50% screen width
-                self.renderer.screen_height * 0.7, # 70% screen height
-                200, 
-                50, 
-                "assets/play_btn.png",
+                self.renderer.screen_width * 0.5, # 50% screen weight
+                self.renderer.screen_height * 0.9, # 60% screen height
+                40,
+                40,
+                "assets/player.png",
                 rect_mode=const.CENTER,
                 wrap_mode=const.CLAMP
             )

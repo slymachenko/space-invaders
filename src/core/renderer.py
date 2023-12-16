@@ -1,5 +1,8 @@
 import pygame
 
+# CUSTOM MODULES
+from src.utils import constants as const
+
 # TYPES
 from pygame.time import Clock
 from pygame.surface import Surface
@@ -12,8 +15,8 @@ class Renderer:
     clock : Clock
 
     def __init__(self, screen_width : int, screen_height : int, fps : int):
-        self.screen_width = screen_width
-        self.screen_height = screen_height
+        self.screen_width = screen_width if screen_width > const.SCREEN_WIDTH_MIN else const.SCREEN_WIDTH_MIN
+        self.screen_height = screen_height if screen_height > const.SCREEN_HEIGHT_MIN else const.SCREEN_HEIGHT_MIN
         self.fps = fps
 
         self.setup()
