@@ -1,15 +1,28 @@
 import pygame
-import sys
 
-from src.utils import constants as const
+# TYPES
+from pygame.time import Clock
+from pygame.surface import Surface
 
 class Renderer:
-    def __init__(self):
+    screen_width : int
+    screen_height : int
+    fps : int
+    screen : Surface
+    clock : Clock
+
+    def __init__(self, screen_width : int, screen_height : int, fps : int):
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+        self.fps = fps
+
+        self.setup()
+        
+    def setup(self) -> None:
         pygame.init() 
     
-        self.screen = pygame.display.set_mode((const.SCREEN_WIDTH, const.SCREEN_HEIGHT))
-        self.clock = pygame.time.Clock()
-        self.is_game_running = True
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+        self.clock = Clock()
 
         # CAPTION
         pygame.display.set_caption("Space Invaders - by slymachenko")
@@ -17,31 +30,16 @@ class Renderer:
         # ICON
         icon = pygame.image.load('assets/icon.png')
         pygame.display.set_icon(icon)
-    
-    def input(self) -> None:
-        # QUIT
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.is_game_running = False
         
-    def update(self, *game_objects) -> None:
+    def render(self, *nodes) -> None:
         self.clear_screen()
             
-        for obj in game_objects:
-            obj.update(self)
-        
-    def render(self, *game_objects) -> None:
-        self.clear_screen()
-            
-        for obj in game_objects:
-            obj.render(self)
+        for node in nodes:
+            if hasattr(node, 'render') and callable(node.render):
+                node.render()
         
         pygame.display.flip()
-        self.clock.tick(const.FPS)
+        self.clock.tick(self.fps)
 
     def clear_screen(self) -> None:
         self.screen.fill((255, 255, 255))
-        
-    def quit(self) -> None:
-        pygame.quit()
-        sys.exit(0)
