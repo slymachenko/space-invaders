@@ -4,14 +4,15 @@ import sys
 # TYPES
 from pygame.event import Event
 
+
 class InputHandler:
-    is_game_running : bool
-    events : list[Event]
-    keys : list[int]
+    is_game_running: bool
+    events: list[Event]
+    keys: list[int]
 
     def __init__(self):
         self.is_game_running = True
-    
+
     def input(self, *nodes) -> None:
         self.events = list()
         self.keys = pygame.key.get_pressed()
@@ -25,7 +26,7 @@ class InputHandler:
 
         for node in nodes:
             node.input()
-        
+
     def quit(self) -> None:
         pygame.quit()
         sys.exit(0)

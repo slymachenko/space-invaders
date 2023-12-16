@@ -8,11 +8,11 @@ from src.abstracts.Updateable import Updateable
 from src.core.Renderer import Renderer
 from src.core.InputHandler import InputHandler
 
-class Scene(Inputable, Updateable, Renderable, ABC):
-    renderer : Renderer
-    input_handler : InputHandler
 
-    def __init__(self, renderer : Renderer, input_handler : InputHandler):
+class Scene(Inputable, Updateable, Renderable, ABC):
+    renderer: Renderer
+    input_handler: InputHandler
+
+    def __init__(self, renderer: Renderer, input_handler: InputHandler):
         self.renderer = renderer
         self.input_handler = input_handler
-    

@@ -15,10 +15,23 @@ from src.core.InputHandler import InputHandler
 from src.core.Updater import Updater
 from pygame.rect import Rect
 
-class PlayButton(StaticTextureRect, Button):
-    rect : Rect
 
-    def __init__(self, renderer : Renderer, input_handler : InputHandler, updater: Updater, x : int, y : int, width : int, height : int, path : str, rect_mode : int = const.CORNER, wrap_mode : int = const.CORNER):
+class PlayButton(StaticTextureRect, Button):
+    rect: Rect
+
+    def __init__(
+        self,
+        renderer: Renderer,
+        input_handler: InputHandler,
+        updater: Updater,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+        path: str,
+        rect_mode: int = const.CORNER,
+        wrap_mode: int = const.CORNER,
+    ):
         super().__init__(renderer, x, y, width, height, path, rect_mode, wrap_mode)
         self.input_handler = input_handler
         self.updater = updater
@@ -30,7 +43,9 @@ class PlayButton(StaticTextureRect, Button):
             if event.type == MOUSEBUTTONDOWN and event.button == 1:
                 mouse_pos = mouse.get_pos()
                 if self.rect.collidepoint(mouse_pos):
-                    self.updater.switch_scene(PlayScene(self.renderer, self.input_handler, self.updater))
+                    self.updater.switch_scene(
+                        PlayScene(self.renderer, self.input_handler, self.updater)
+                    )
 
     def update(self) -> None:
         pass
