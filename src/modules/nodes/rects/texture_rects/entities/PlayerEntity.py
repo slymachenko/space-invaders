@@ -29,7 +29,7 @@ class PlayerEntity(StaticTextureRect, Entity):
         width: int,
         height: int,
         path: str,
-        rect_mode: int = const.CORNER,
+        rect_mode: int = const.CLAMP,
         wrap_mode: int = const.CORNER,
     ):
         super().__init__(renderer, x, y, width, height, path, rect_mode, wrap_mode)

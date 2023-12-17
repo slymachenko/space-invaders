@@ -22,7 +22,7 @@ class Entity(TextureRect, Inputable, Updateable, ABC):
         height: int,
         path: str,
         rect_mode: int = const.CORNER,
-        wrap_mode: int = const.CORNER,
+        wrap_mode: int = const.CLAMP,
     ):
         super().__init__(renderer, x, y, width, height, path, rect_mode, wrap_mode)
 
