@@ -9,12 +9,28 @@ from src.abstracts.Inputable import Inputable
 from src.abstracts.Updateable import Updateable
 
 # TYPES
-from src.core.Renderer import Renderer
+from src.abstracts.scenes.Scene import Scene
+from pygame.rect import Rect
+
 
 class Button(TextureRect, Inputable, Updateable, ABC):
-    def __init__(self, renderer : Renderer, x : int, y : int, width : int, height : int, path : str, rect_mode : int = const.CORNER, wrap_mode : int = const.CORNER):
-        super().__init__(renderer, x, y, width, height, path, rect_mode, wrap_mode)
-    
+    rect: Rect
+
+    def __init__(
+        self,
+        scene: Scene,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+        path: str,
+        rect_mode: int = const.CORNER,
+        wrap_mode: int = const.CORNER,
+    ):
+        super().__init__(scene, x, y, width, height, path, rect_mode, wrap_mode)
+        self.rect = self.img.get_rect()
+        self.rect.topleft = (self.x, self.y)
+
     def input(self) -> None:
         pass
 

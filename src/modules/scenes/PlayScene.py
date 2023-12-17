@@ -30,7 +30,7 @@ class PlayScene(Scene):
         # background sky
         self.nodes.append(
             StaticTextureRect(
-                self.renderer,
+                self,
                 0,
                 0,
                 self.renderer.screen_width,
@@ -42,7 +42,7 @@ class PlayScene(Scene):
         # background buildings
         self.nodes.append(
             StaticTextureRect(
-                self.renderer,
+                self,
                 0,
                 (self.renderer.screen_height * 0.6)
                 - self.nodes[-1].img.get_size()[
@@ -57,7 +57,7 @@ class PlayScene(Scene):
         # background floor
         self.nodes.append(
             StaticTextureRect(
-                self.renderer,
+                self,
                 0,
                 self.renderer.screen_height * 0.6,  # 60% screen height
                 self.renderer.screen_width,
@@ -69,9 +69,7 @@ class PlayScene(Scene):
         # player entity
         self.nodes.append(
             PlayerEntity(
-                self.renderer,
-                self.input_handler,
-                self.updater,
+                self,
                 self.renderer.screen_width * 0.5,  # 50% screen weight
                 self.renderer.screen_height * 0.9,  # 60% screen height
                 40,
@@ -79,6 +77,7 @@ class PlayScene(Scene):
                 "assets/player.png",
                 rect_mode=const.CENTER,
                 wrap_mode=const.CLAMP,
+                speed=10,
             )
         )
 

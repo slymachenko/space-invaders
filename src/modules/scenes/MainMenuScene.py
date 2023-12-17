@@ -30,7 +30,7 @@ class MainMenuScene(Scene):
         # background sky
         self.nodes.append(
             StaticTextureRect(
-                self.renderer,
+                self,
                 0,
                 0,
                 self.renderer.screen_width,
@@ -42,7 +42,7 @@ class MainMenuScene(Scene):
         # background buildings
         self.nodes.append(
             StaticTextureRect(
-                self.renderer,
+                self,
                 0,
                 (self.renderer.screen_height * 0.6)
                 - self.nodes[-1].img.get_size()[
@@ -57,7 +57,7 @@ class MainMenuScene(Scene):
         # background floor
         self.nodes.append(
             StaticTextureRect(
-                self.renderer,
+                self,
                 0,
                 self.renderer.screen_height * 0.6,  # 60% screen height
                 self.renderer.screen_width,
@@ -69,7 +69,7 @@ class MainMenuScene(Scene):
         # title
         self.nodes.append(
             StaticTextureRect(
-                self.renderer,
+                self,
                 self.renderer.screen_width * 0.5,  # 50% screen width
                 self.renderer.screen_height * 0.3,  # 30% screen height
                 400,
@@ -83,9 +83,7 @@ class MainMenuScene(Scene):
         # play button
         self.nodes.append(
             PlayButton(
-                self.renderer,
-                self.input_handler,
-                self.updater,
+                self,
                 self.renderer.screen_width * 0.5,  # 50% screen width
                 self.renderer.screen_height * 0.7,  # 70% screen height
                 200,

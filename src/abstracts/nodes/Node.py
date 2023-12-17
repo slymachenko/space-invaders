@@ -1,13 +1,13 @@
 from abc import ABC
-from src.core.Renderer import Renderer
+from src.abstracts.scenes.Scene import Scene
 
 
 class Node(ABC):
-    renderer: Renderer
+    scene: Scene
     x: int
     y: int
 
-    def __init__(self, renderer: Renderer, x: int, y: int):
-        self.renderer = renderer
+    def __init__(self, scene: Scene, x: int, y: int):
+        self.scene = scene
         self.x = x
         self.y = y

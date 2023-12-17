@@ -9,9 +9,7 @@ from src.abstracts.nodes.rects.texture_rects.entities.Entity import Entity
 
 # TYPES
 from typing import Tuple
-from src.core.Renderer import Renderer
-from src.core.InputHandler import InputHandler
-from src.core.Updater import Updater
+from src.abstracts.scenes.Scene import Scene
 from pygame.rect import Rect
 
 
@@ -21,22 +19,18 @@ class PlayerEntity(Entity, StaticTextureRect):
 
     def __init__(
         self,
-        renderer: Renderer,
-        input_handler: InputHandler,
-        updater: Updater,
+        scene: Scene,
         x: int,
         y: int,
         width: int,
         height: int,
         path: str,
-        rect_mode: int = const.CLAMP,
-        wrap_mode: int = const.CORNER,
+        rect_mode: int = const.CORNER,
+        wrap_mode: int = const.CLAMP,
         speed: int = 10,
     ):
         super().__init__(
-            renderer,
-            input_handler,
-            updater,
+            scene,
             x,
             y,
             width,
@@ -48,11 +42,11 @@ class PlayerEntity(Entity, StaticTextureRect):
         )
 
     def input(self) -> None:
-        if self.input_handler.events["left"]:
+        if self.scene.input_handler.events["left"]:
             self.move((-1, 0))
-        if self.input_handler.events["right"]:
+        if self.scene.input_handler.events["right"]:
             self.move((1, 0))
-        if self.input_handler.events["shoot"]:
+        if self.scene.input_handler.events["shoot"]:
             print("SPACE")
 
     def update(self) -> None:
@@ -72,7 +66,7 @@ class PlayerEntity(Entity, StaticTextureRect):
                 self.y -= self.speed
 
     def handle_borders(self) -> None:
-        game_screen_x: Tuple[int, int] = self.updater.game_screen_x
+        game_screen_x: Tuple[int, int] = self.scene.updater.game_screen_x
         img_size: Tuple[int, int] = self.img.get_size()
 
         if self.x < game_screen_x[0]:

@@ -10,20 +10,13 @@ from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextur
 from src.abstracts.nodes.rects.texture_rects.buttons.Button import Button
 
 # TYPES
-from src.core.Renderer import Renderer
-from src.core.InputHandler import InputHandler
-from src.core.Updater import Updater
-from pygame.rect import Rect
+from src.abstracts.scenes.Scene import Scene
 
 
 class PlayButton(StaticTextureRect, Button):
-    rect: Rect
-
     def __init__(
         self,
-        renderer: Renderer,
-        input_handler: InputHandler,
-        updater: Updater,
+        scene: Scene,
         x: int,
         y: int,
         width: int,
@@ -32,25 +25,18 @@ class PlayButton(StaticTextureRect, Button):
         rect_mode: int = const.CORNER,
         wrap_mode: int = const.CORNER,
     ):
-        super().__init__(renderer, x, y, width, height, path, rect_mode, wrap_mode)
-        self.input_handler = input_handler
-        self.updater = updater
-        self.rect = self.img.get_rect()
-        self.rect.topleft = (self.x, self.y)
+        super().__init__(scene, x, y, width, height, path, rect_mode, wrap_mode)
 
     def input(self) -> None:
-        # for event in self.input_handler.events:
-        #     if event.type == MOUSEBUTTONDOWN and event.button == 1:
-        #         mouse_pos = mouse.get_pos()
-        #         if self.rect.collidepoint(mouse_pos):
-        #             self.updater.switch_scene(
-        #                 PlayScene(self.renderer, self.input_handler, self.updater)
-        #             )
-        if self.input_handler.events["click"]:
+        if self.scene.input_handler.events["click"]:
             mouse_pos = mouse.get_pos()
             if self.rect.collidepoint(mouse_pos):
-                self.updater.switch_scene(
-                    PlayScene(self.renderer, self.input_handler, self.updater)
+                self.scene.updater.switch_scene(
+                    PlayScene(
+                        self.scene.renderer,
+                        self.scene.input_handler,
+                        self.scene.updater,
+                    )
                 )
 
     def update(self) -> None:

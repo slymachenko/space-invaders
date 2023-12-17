@@ -10,11 +10,11 @@ from src.abstracts.nodes.rects.texture_rects.TextureRect import TextureRect
 # TYPES
 from typing import Tuple
 from pygame.surface import Surface
-from src.core.Renderer import Renderer
+from src.abstracts.scenes.Scene import Scene
 
 
 class StaticTextureRect(TextureRect):
-    renderer: Renderer
+    scene: Scene
     x: int
     y: int
     width: int
@@ -28,7 +28,7 @@ class StaticTextureRect(TextureRect):
 
     def __init__(
         self,
-        renderer: Renderer,
+        scene: Scene,
         x: int,
         y: int,
         width: int,
@@ -37,8 +37,7 @@ class StaticTextureRect(TextureRect):
         rect_mode: int = const.CORNER,
         wrap_mode: int = const.CORNER,
     ):
-        super().__init__(renderer, x, y, width, height, path, rect_mode, wrap_mode)
-
+        super().__init__(scene, x, y, width, height, path, rect_mode, wrap_mode)
         self.rect_mode_setup()
         self.wrap_mode_setup()
 
@@ -81,6 +80,6 @@ class StaticTextureRect(TextureRect):
         img_size = self.img.get_size()
         for x in range(self.tiles_x):
             for y in range(self.tiles_y):
-                self.renderer.screen.blit(
+                self.scene.renderer.screen.blit(
                     self.img, (self.x + x * img_size[0], self.y + y * img_size[1])
                 )
