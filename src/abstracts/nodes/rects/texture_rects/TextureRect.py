@@ -8,6 +8,7 @@ from src.utils import constants as const
 from src.abstracts.nodes.rects.Rect import Rect
 
 # TYPES
+from typing import Tuple
 from src.abstracts.scenes.Scene import Scene
 from pygame import Surface as PySurface
 from pygame import Rect as PyRect
@@ -18,6 +19,7 @@ class TextureRect(Rect, ABC):
     rect_mode: int
     wrap_mode: int
     img: PySurface
+    img_size: Tuple[int, int]
     tiles_x: int
     tiles_y: int
     rect: PyRect
@@ -40,6 +42,7 @@ class TextureRect(Rect, ABC):
         self.tiles_x = 1
         self.tiles_y = 1
         self.img = pygame.image.load(self.path)
+        self.img_size = self.img.get_size()
         self.rect = self.img.get_rect()
         self.rect.topleft = (self.x, self.y)
 

@@ -4,6 +4,7 @@ from src.utils import constants as const
 # ABSTRACTS
 from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
 from src.abstracts.nodes.rects.texture_rects.entities.Entity import Entity
+from src.abstracts.Inputable import Inputable
 from src.modules.nodes.rects.texture_rects.projectiles.PlayerProjectile import (
     PlayerProjectile,
 )
@@ -14,7 +15,7 @@ from src.abstracts.scenes.Scene import Scene
 from pygame.rect import Rect
 
 
-class PlayerEntity(Entity, StaticTextureRect):
+class PlayerEntity(Entity, StaticTextureRect, Inputable):
     rect: Rect
     speed: int
 
@@ -28,7 +29,7 @@ class PlayerEntity(Entity, StaticTextureRect):
         path: str,
         rect_mode: int = const.CORNER,
         wrap_mode: int = const.CLAMP,
-        speed: int = 10,
+        speed: Tuple[int, int] = (10, 10),
     ):
         super().__init__(
             scene,
@@ -58,15 +59,15 @@ class PlayerEntity(Entity, StaticTextureRect):
     def move(self, vec: Tuple[int, int]) -> None:
         match vec[0]:
             case 1:
-                self.x += self.speed
+                self.x += self.speed[0]
             case -1:
-                self.x -= self.speed
+                self.x -= self.speed[0]
 
         match vec[1]:
             case 1:
-                self.y += self.speed
+                self.y += self.speed[1]
             case -1:
-                self.y -= self.speed
+                self.y -= self.speed[1]
 
     def handle_borders(self) -> None:
         game_screen_x: Tuple[int, int] = self.scene.updater.game_screen_x

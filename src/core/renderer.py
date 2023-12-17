@@ -3,8 +3,9 @@ import pygame
 # CUSTOM MODULES
 from src.utils import constants as const
 
-# TYPES
 from pygame.time import Clock
+
+# TYPES
 from pygame.surface import Surface
 
 
@@ -14,6 +15,7 @@ class Renderer:
     fps: int
     screen: Surface
     clock: Clock
+    ticks: int
 
     def __init__(self, screen_width: int, screen_height: int, fps: int):
         self.screen_width = (
@@ -27,6 +29,7 @@ class Renderer:
             else const.SCREEN_HEIGHT_MIN
         )
         self.fps = fps
+        self.ticks = 0
 
         self.setup()
 
@@ -50,7 +53,7 @@ class Renderer:
             scene.render()
 
         pygame.display.flip()
-        self.clock.tick(self.fps)
+        self.ticks += self.clock.tick(self.fps)
 
     def clear_screen(self) -> None:
         self.screen.fill((255, 255, 255))

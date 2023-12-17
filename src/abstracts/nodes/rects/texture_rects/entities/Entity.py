@@ -5,17 +5,20 @@ from src.utils import constants as const
 
 # ABSTRACTS
 from src.abstracts.nodes.rects.texture_rects.TextureRect import TextureRect
-from src.abstracts.Inputable import Inputable
 from src.abstracts.Updateable import Updateable
 
 # TYPES
+from typing import Tuple
 from src.abstracts.scenes.Scene import Scene
-from pygame import Rect
+from pygame import Surface as PySurface
+from pygame import Rect as PyRect
 
 
-class Entity(TextureRect, Inputable, Updateable, ABC):
-    rect: Rect
-    speed: int
+class Entity(TextureRect, Updateable, ABC):
+    sprite: PySurface
+    sprite_size: Tuple[int, int]
+    rect: PyRect
+    speed: Tuple[int, int]
 
     def __init__(
         self,
@@ -27,10 +30,12 @@ class Entity(TextureRect, Inputable, Updateable, ABC):
         path: str,
         rect_mode: int = const.CORNER,
         wrap_mode: int = const.CLAMP,
-        speed: int = 10,
+        speed: Tuple[int, int] = (10, 10),
     ):
         super().__init__(scene, x, y, width, height, path, rect_mode, wrap_mode)
         self.speed = speed
+        self.sprite = self.img
+        self.sprite_size = self.sprite.get_size()
 
     def input(self) -> None:
         pass
