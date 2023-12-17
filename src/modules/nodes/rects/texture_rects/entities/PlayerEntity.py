@@ -40,17 +40,17 @@ class PlayerEntity(StaticTextureRect, Entity):
         self.speed = 10
 
     def input(self) -> None:
-        if self.input_handler.keys[K_LEFT]:
+        if self.input_handler.events["left"]:
             self.move((-1, 0))
-        if self.input_handler.keys[K_RIGHT]:
+        if self.input_handler.events["right"]:
             self.move((1, 0))
-        if self.input_handler.keys[K_SPACE]:
+        if self.input_handler.events["shoot"]:
             print("SPACE")
 
     def update(self) -> None:
-        pass
+        self.handle_borders()
 
-    def move(self, vec: tuple()) -> None:
+    def move(self, vec: Tuple[int, int]) -> None:
         match vec[0]:
             case 1:
                 self.x += self.speed
@@ -62,3 +62,12 @@ class PlayerEntity(StaticTextureRect, Entity):
                 self.y += self.speed
             case -1:
                 self.y -= self.speed
+
+    def handle_borders(self):
+        game_screen_x: Tuple[int, int] = self.updater.game_screen_x
+        img_size: Tuple[int, int] = self.img.get_size()
+
+        if self.x < game_screen_x[0]:
+            self.x = game_screen_x[0]
+        elif self.x > game_screen_x[1] - img_size[0]:
+            self.x = game_screen_x[1] - img_size[0]

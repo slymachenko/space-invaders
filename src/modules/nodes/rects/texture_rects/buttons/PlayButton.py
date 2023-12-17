@@ -39,13 +39,19 @@ class PlayButton(StaticTextureRect, Button):
         self.rect.topleft = (self.x, self.y)
 
     def input(self) -> None:
-        for event in self.input_handler.events:
-            if event.type == MOUSEBUTTONDOWN and event.button == 1:
-                mouse_pos = mouse.get_pos()
-                if self.rect.collidepoint(mouse_pos):
-                    self.updater.switch_scene(
-                        PlayScene(self.renderer, self.input_handler, self.updater)
-                    )
+        # for event in self.input_handler.events:
+        #     if event.type == MOUSEBUTTONDOWN and event.button == 1:
+        #         mouse_pos = mouse.get_pos()
+        #         if self.rect.collidepoint(mouse_pos):
+        #             self.updater.switch_scene(
+        #                 PlayScene(self.renderer, self.input_handler, self.updater)
+        #             )
+        if self.input_handler.events["click"]:
+            mouse_pos = mouse.get_pos()
+            if self.rect.collidepoint(mouse_pos):
+                self.updater.switch_scene(
+                    PlayScene(self.renderer, self.input_handler, self.updater)
+                )
 
     def update(self) -> None:
         pass
