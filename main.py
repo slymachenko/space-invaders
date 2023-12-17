@@ -3,7 +3,6 @@ from src.core.Renderer import Renderer
 from src.core.InputHandler import InputHandler
 
 from src.modules.scenes.MainMenuScene import MainMenuScene
-# from src.modules.scenes.PlayScene import PlayScene
 
 # TYPES
 from src.abstracts.scenes.Scene import Scene
@@ -12,19 +11,21 @@ screen_width = 1280
 screen_height = 720
 fps = 60
 
+
 class Game:
-    renderer : Renderer
-    input_handler : InputHandler
-    current_scene : Scene 
+    renderer: Renderer
+    input_handler: InputHandler
+    current_scene: Scene
 
     def __init__(self):
         self.renderer = Renderer(screen_width, screen_height, fps)
         self.input_handler = InputHandler()
         self.updater = Updater(self)
-        self.current_scene = MainMenuScene(self.renderer, self.input_handler, self.updater)
-        # self.current_scene = PlayScene(self.renderer, self.input_handler, self.updater)
+        self.current_scene = MainMenuScene(
+            self.renderer, self.input_handler, self.updater
+        )
 
-    def switch_scene(self, new_scene : Scene) -> None:
+    def switch_scene(self, new_scene: Scene) -> None:
         self.current_scene = new_scene
 
     def run(self) -> None:
@@ -37,8 +38,9 @@ class Game:
 
             # RENDER
             self.renderer.render((self.current_scene))
-        
+
         self.input_handler.quit()
+
 
 if __name__ == "__main__":
     game = Game()
