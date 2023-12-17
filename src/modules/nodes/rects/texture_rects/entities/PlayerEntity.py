@@ -1,11 +1,12 @@
-from pygame.locals import K_LEFT, K_RIGHT, K_SPACE
-
 # CUSTOM MODULES
 from src.utils import constants as const
 
 # ABSTRACTS
 from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
 from src.abstracts.nodes.rects.texture_rects.entities.Entity import Entity
+from src.modules.nodes.rects.texture_rects.projectiles.PlayerProjectile import (
+    PlayerProjectile,
+)
 
 # TYPES
 from typing import Tuple
@@ -41,13 +42,15 @@ class PlayerEntity(Entity, StaticTextureRect):
             speed,
         )
 
+        self.gen_bullet()
+
     def input(self) -> None:
         if self.scene.input_handler.events["left"]:
             self.move((-1, 0))
         if self.scene.input_handler.events["right"]:
             self.move((1, 0))
         if self.scene.input_handler.events["shoot"]:
-            print("SPACE")
+            self.shoot()
 
     def update(self) -> None:
         self.handle_borders()
@@ -73,3 +76,22 @@ class PlayerEntity(Entity, StaticTextureRect):
             self.x = game_screen_x[0]
         elif self.x > game_screen_x[1] - img_size[0]:
             self.x = game_screen_x[1] - img_size[0]
+
+    def shoot(self):
+        if not self.scene.check_node(self.bullet):
+            self.gen_bullet()
+            self.scene.nodes.append(self.bullet)
+
+    def gen_bullet(self) -> None:
+        img_size = self.img.get_size()
+        self.bullet = PlayerProjectile(
+            self.scene,
+            self.x + img_size[0] / 2,
+            self.y,
+            2,
+            1,
+            "assets/bullet1.png",
+            rect_mode=const.CENTER,
+            wrap_mode=const.CLAMP,
+            speed=15,
+        )

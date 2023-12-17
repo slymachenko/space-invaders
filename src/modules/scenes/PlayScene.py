@@ -95,3 +95,11 @@ class PlayScene(Scene):
         for node in self.nodes:
             if hasattr(node, "render") and callable(node.render):
                 node.render()
+
+    def remove_node(self, node: Node) -> None:
+        self.nodes.remove(node)
+
+    def check_node(self, node: Node) -> bool:
+        if node in self.nodes:
+            return True
+        return False
