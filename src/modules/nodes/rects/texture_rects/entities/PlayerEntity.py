@@ -15,7 +15,7 @@ from src.core.Updater import Updater
 from pygame.rect import Rect
 
 
-class PlayerEntity(StaticTextureRect, Entity):
+class PlayerEntity(Entity, StaticTextureRect):
     rect: Rect
     speed: int
 
@@ -31,13 +31,21 @@ class PlayerEntity(StaticTextureRect, Entity):
         path: str,
         rect_mode: int = const.CLAMP,
         wrap_mode: int = const.CORNER,
+        speed: int = 10,
     ):
-        super().__init__(renderer, x, y, width, height, path, rect_mode, wrap_mode)
-        self.input_handler = input_handler
-        self.updater = updater
-        self.rect = self.img.get_rect()
-        self.rect.topleft = (self.x, self.y)
-        self.speed = 10
+        super().__init__(
+            renderer,
+            input_handler,
+            updater,
+            x,
+            y,
+            width,
+            height,
+            path,
+            rect_mode,
+            wrap_mode,
+            speed,
+        )
 
     def input(self) -> None:
         if self.input_handler.events["left"]:
