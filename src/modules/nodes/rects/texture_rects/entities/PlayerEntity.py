@@ -63,7 +63,7 @@ class PlayerEntity(StaticTextureRect, Entity):
             case -1:
                 self.y -= self.speed
 
-    def handle_borders(self):
+    def handle_borders(self) -> None:
         game_screen_x: Tuple[int, int] = self.updater.game_screen_x
         img_size: Tuple[int, int] = self.img.get_size()
 
