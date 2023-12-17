@@ -1,7 +1,5 @@
 # TYPES
 from typing import Tuple
-from src.abstracts.nodes.Node import Node
-from src.abstracts.scenes.Scene import Scene
 
 
 class Updater:
@@ -21,9 +19,9 @@ class Updater:
             screen_height,
         )
 
-    def update(self, *nodes: list[Node]) -> None:
-        for node in nodes:
-            node.update()
+    def update(self, *scenes) -> None:
+        for scene in scenes:
+            scene.update()
 
-    def switch_scene(self, new_scene: Scene) -> None:
+    def switch_scene(self, new_scene) -> None:
         self.game.switch_scene(new_scene)

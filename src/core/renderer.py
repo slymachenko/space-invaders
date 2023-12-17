@@ -43,12 +43,11 @@ class Renderer:
         icon = pygame.image.load("assets/icon.png")
         pygame.display.set_icon(icon)
 
-    def render(self, *nodes) -> None:
+    def render(self, *scenes) -> None:
         self.clear_screen()
 
-        for node in nodes:
-            if hasattr(node, "render") and callable(node.render):
-                node.render()
+        for scene in scenes:
+            scene.render()
 
         pygame.display.flip()
         self.clock.tick(self.fps)

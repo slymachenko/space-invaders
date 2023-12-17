@@ -11,7 +11,7 @@ class InputHandler:
     def __init__(self):
         self.is_game_running = True
 
-    def input(self, *nodes) -> None:
+    def input(self, *scenes) -> None:
         self.events = {"click": 0, "left": 0, "right": 0, "shoot": 0}
 
         # Mouse handling
@@ -34,8 +34,8 @@ class InputHandler:
             self.events["shoot"] = 1
 
         # Call input for each node
-        for node in nodes:
-            node.input()
+        for scene in scenes:
+            scene.input()
 
     def quit(self) -> None:
         pygame.quit()
