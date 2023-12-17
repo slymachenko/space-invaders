@@ -25,11 +25,9 @@ class Button(TextureRect, Inputable, Updateable, ABC):
         height: int,
         path: str,
         rect_mode: int = const.CORNER,
-        wrap_mode: int = const.CORNER,
+        wrap_mode: int = const.CLAMP,
     ):
         super().__init__(scene, x, y, width, height, path, rect_mode, wrap_mode)
-        self.rect = self.img.get_rect()
-        self.rect.topleft = (self.x, self.y)
 
     def input(self) -> None:
         pass

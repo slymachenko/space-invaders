@@ -9,16 +9,18 @@ from src.abstracts.nodes.rects.Rect import Rect
 
 # TYPES
 from src.abstracts.scenes.Scene import Scene
-from pygame import Surface
+from pygame import Surface as PySurface
+from pygame import Rect as PyRect
 
 
 class TextureRect(Rect, ABC):
     path: str
     rect_mode: int
     wrap_mode: int
-    img: Surface
+    img: PySurface
     tiles_x: int
     tiles_y: int
+    rect: PyRect
 
     def __init__(
         self,
@@ -38,6 +40,8 @@ class TextureRect(Rect, ABC):
         self.tiles_x = 1
         self.tiles_y = 1
         self.img = pygame.image.load(self.path)
+        self.rect = self.img.get_rect()
+        self.rect.topleft = (self.x, self.y)
 
     def wrap_mode_setup(self) -> None:
         pass

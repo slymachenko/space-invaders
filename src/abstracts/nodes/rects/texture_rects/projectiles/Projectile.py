@@ -30,8 +30,6 @@ class Projectile(TextureRect, Updateable, ABC):
     ):
         super().__init__(scene, x, y, width, height, path, rect_mode, wrap_mode)
         self.speed = speed
-        self.rect = self.img.get_rect()
-        self.rect.topleft = (self.x, self.y)
 
     def update(self) -> None:
         pass

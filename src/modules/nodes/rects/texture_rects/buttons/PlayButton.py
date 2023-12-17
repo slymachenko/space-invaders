@@ -23,7 +23,7 @@ class PlayButton(StaticTextureRect, Button):
         height: int,
         path: str,
         rect_mode: int = const.CORNER,
-        wrap_mode: int = const.CORNER,
+        wrap_mode: int = const.CLAMP,
     ):
         super().__init__(scene, x, y, width, height, path, rect_mode, wrap_mode)
 
