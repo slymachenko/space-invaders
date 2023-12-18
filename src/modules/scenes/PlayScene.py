@@ -30,6 +30,16 @@ class PlayScene(Scene):
         self.setup()
 
     def setup(self) -> None:
+        # generate background
+        self.gen_bg()
+
+        # generate player entity
+        self.gen_player()
+
+        # generate aliens
+        self.gen_aliens()
+
+    def gen_bg(self) -> None:
         # background sky
         self.nodes.append(
             StaticTextureRect(
@@ -69,6 +79,7 @@ class PlayScene(Scene):
             )
         )
 
+    def gen_player(self) -> None:
         # player entity
         self.nodes.append(
             PlayerEntity(
@@ -84,33 +95,7 @@ class PlayScene(Scene):
             )
         )
 
-        # genrate aliens
-        self.gen_aliens()
-
-    def input(self) -> None:
-        for node in self.nodes:
-            if hasattr(node, "input") and callable(node.input):
-                node.input()
-
-    def update(self) -> None:
-        for node in self.nodes:
-            if hasattr(node, "update") and callable(node.update):
-                node.update()
-
-    def render(self) -> None:
-        for node in self.nodes:
-            if hasattr(node, "render") and callable(node.render):
-                node.render()
-
-    def remove_node(self, node: Node) -> None:
-        self.nodes.remove(node)
-
-    def check_node(self, node: Node) -> bool:
-        if node in self.nodes:
-            return True
-        return False
-
-    def gen_aliens(self):
+    def gen_aliens(self) -> None:
         columns: int = 10
 
         offset: Tuple[int, int] = (60, 40)
@@ -173,7 +158,7 @@ class PlayScene(Scene):
         offset: Tuple[int, int],
         size: Tuple[int, int],
         shift: int = 0,
-    ):
+    ) -> None:
         for i in range(0, size[0]):
             for j in range(shift, size[1] + shift):
                 direction: list[int] = [1, 0]
@@ -196,3 +181,26 @@ class PlayScene(Scene):
                         wait_time=200,
                     )
                 )
+
+    def remove_node(self, node: Node) -> None:
+        self.nodes.remove(node)
+
+    def check_node(self, node: Node) -> bool:
+        if node in self.nodes:
+            return True
+        return False
+
+    def input(self) -> None:
+        for node in self.nodes:
+            if hasattr(node, "input") and callable(node.input):
+                node.input()
+
+    def update(self) -> None:
+        for node in self.nodes:
+            if hasattr(node, "update") and callable(node.update):
+                node.update()
+
+    def render(self) -> None:
+        for node in self.nodes:
+            if hasattr(node, "render") and callable(node.render):
+                node.render()

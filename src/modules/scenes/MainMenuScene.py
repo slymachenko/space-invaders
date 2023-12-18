@@ -30,6 +30,16 @@ class MainMenuScene(Scene):
         self.setup()
 
     def setup(self) -> None:
+        # generate background
+        self.gen_bg()
+
+        # generate title
+        self.gen_title()
+
+        # generate play button
+        self.gen_play_btn()
+
+    def gen_bg(self) -> None:
         # background sky
         self.nodes.append(
             StaticTextureRect(
@@ -69,6 +79,7 @@ class MainMenuScene(Scene):
             )
         )
 
+    def gen_title(self) -> None:
         # title
         self.nodes.append(
             StaticTextureRect(
@@ -83,6 +94,7 @@ class MainMenuScene(Scene):
             )
         )
 
+    def gen_play_btn(self) -> None:
         # play button
         self.nodes.append(
             ChangeSceneButton(
