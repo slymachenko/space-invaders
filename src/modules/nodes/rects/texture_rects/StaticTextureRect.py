@@ -75,7 +75,6 @@ class StaticTextureRect(TextureRect):
             case const.CENTER:
                 self.x -= self.width // 2
                 self.y -= self.height // 2
-                self.rect.topleft = (self.x, self.y)
 
     def render(self) -> None:
         img_size = self.img.get_size()

@@ -22,7 +22,6 @@ class TextureRect(Rect, ABC):
     img_size: Tuple[int, int]
     tiles_x: int
     tiles_y: int
-    rect: PyRect
 
     def __init__(
         self,
@@ -43,8 +42,6 @@ class TextureRect(Rect, ABC):
         self.tiles_y = 1
         self.img = pygame.image.load(self.path)
         self.img_size = self.img.get_size()
-        self.rect = self.img.get_rect()
-        self.rect.topleft = (self.x, self.y)
 
     def wrap_mode_setup(self) -> None:
         pass
