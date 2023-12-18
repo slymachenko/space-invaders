@@ -52,6 +52,7 @@ class AlienEntity(Entity, StaticTextureRect):
         self.img = self.sprite.subsurface(
             (0, 0, self.sprite_size[0] / 2, self.sprite_size[1])
         )
+        self.rect = self.img.get_rect(topleft=(self.x, self.y))
         self.animate_step = 0
         self.step_timer = self.scene.renderer.ticks
         self.gen_bullet()
@@ -65,6 +66,7 @@ class AlienEntity(Entity, StaticTextureRect):
             self.step_timer = now
 
         self.handle_borders()
+        self.rect.topleft = (self.x, self.y)
 
     def snake_move(self) -> None:
         self.move(self.direction)

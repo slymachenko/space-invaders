@@ -3,6 +3,9 @@ from src.utils import constants as const
 from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
 from src.modules.nodes.rects.texture_rects.entities.PlayerEntity import PlayerEntity
 from src.modules.nodes.rects.texture_rects.entities.AlienEntity import AlienEntity
+from src.modules.nodes.rects.texture_rects.projectiles.PlayerProjectile import (
+    PlayerProjectile,
+)
 
 # ABSTRACT
 from src.abstracts.scenes.Scene import Scene
@@ -196,9 +199,24 @@ class PlayScene(Scene):
                 node.input()
 
     def update(self) -> None:
+        are_aliens: bool = False
+
         for node in self.nodes:
             if hasattr(node, "update") and callable(node.update):
                 node.update()
+
+            if isinstance(node, AlienEntity):
+                for projectile in self.nodes:
+                    if isinstance(
+                        projectile, PlayerProjectile
+                    ) and projectile.rect.colliderect(node.rect):
+                        self.remove_node(projectile)
+                        self.remove_node(node)
+
+                are_aliens = True
+
+        if not are_aliens:
+            self.gen_aliens()
 
     def render(self) -> None:
         for node in self.nodes:

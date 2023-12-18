@@ -39,6 +39,7 @@ class PlayerProjectile(Projectile, StaticTextureRect):
 
     def update(self) -> None:
         self.move((0, -1))
+        self.rect.topleft = (self.x, self.y)
         self.handle_borders()
 
     def move(self, vec: Tuple[int, int]) -> None:

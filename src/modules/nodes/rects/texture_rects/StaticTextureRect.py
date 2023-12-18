@@ -38,6 +38,8 @@ class StaticTextureRect(TextureRect):
         wrap_mode: int = const.CORNER,
     ):
         super().__init__(scene, x, y, width, height, path, rect_mode, wrap_mode)
+        self.rect = self.img.get_rect(topleft=(self.x, self.y))
+
         self.rect_mode_setup()
         self.wrap_mode_setup()
 
@@ -75,6 +77,7 @@ class StaticTextureRect(TextureRect):
             case const.CENTER:
                 self.x -= self.width // 2
                 self.y -= self.height // 2
+                self.rect.topleft = (self.x, self.y)
 
     def render(self) -> None:
         img_size = self.img.get_size()
