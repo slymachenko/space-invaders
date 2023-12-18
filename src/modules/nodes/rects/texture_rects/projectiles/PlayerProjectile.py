@@ -8,11 +8,9 @@ from src.abstracts.nodes.rects.texture_rects.projectiles.Projectile import Proje
 # TYPES
 from typing import Tuple
 from src.abstracts.scenes.Scene import Scene
-from pygame.rect import Rect
 
 
 class PlayerProjectile(Projectile, StaticTextureRect):
-    rect: Rect
     speed: int
 
     def __init__(
