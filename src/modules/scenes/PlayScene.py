@@ -223,14 +223,19 @@ class PlayScene(Scene):
                 node.update()
 
             if isinstance(node, AlienEntity):
-                for projectile in self.nodes:
+                for other_node in self.nodes:
                     if isinstance(
-                        projectile, PlayerProjectile
-                    ) and projectile.rect.colliderect(node.rect):
-                        self.remove_node(projectile)
+                        other_node, PlayerProjectile
+                    ) and other_node.rect.colliderect(node.rect):
+                        self.remove_node(other_node)
                         self.remove_node(node)
                         self.score += 10
                         self.update_score_text()
+
+                    if isinstance(
+                        other_node, PlayerEntity
+                    ) and other_node.rect.colliderect(node.rect):
+                        self.updater.switch_scene("MainMenuScene")
 
                 are_aliens = True
 

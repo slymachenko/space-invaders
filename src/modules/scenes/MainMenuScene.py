@@ -104,7 +104,7 @@ class MainMenuScene(Scene):
                 200,
                 50,
                 "assets/play_btn.png",
-                PlayScene(self.input_handler, self.updater, self.renderer),
+                "PlayScene",
                 rect_mode=const.CENTER,
                 wrap_mode=const.CLAMP,
             )

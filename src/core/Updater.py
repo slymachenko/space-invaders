@@ -1,6 +1,9 @@
 # TYPES
 from typing import Tuple
 
+# from src.modules.scenes.PlayScene import PlayScene
+# from src.modules.scenes.MainMenuScene import MainMenuScene
+
 
 class Updater:
     def __init__(self, game):
@@ -23,5 +26,13 @@ class Updater:
         for scene in scenes:
             scene.update()
 
-    def switch_scene(self, new_scene) -> None:
-        self.game.switch_scene(new_scene)
+    def switch_scene(self, scene_name) -> None:
+        match scene_name:
+            case "PlayScene":
+                from src.modules.scenes.PlayScene import PlayScene
+
+                self.game.switch_scene(PlayScene)
+            case "MainMenuScene":
+                from src.modules.scenes.MainMenuScene import MainMenuScene
+
+                self.game.switch_scene(MainMenuScene)

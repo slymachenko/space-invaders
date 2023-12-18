@@ -40,7 +40,7 @@ class Core(Core):
         )
 
     def switch_scene(self, new_scene: Scene) -> None:
-        self.current_scene = new_scene
+        self.current_scene = new_scene(self.input_handler, self.updater, self.renderer)
 
     def run(self) -> None:
         while self.input_handler.is_game_running:
