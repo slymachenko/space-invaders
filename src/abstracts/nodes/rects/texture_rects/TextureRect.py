@@ -33,7 +33,7 @@ class TextureRect(Rect, ABC):
         height: int,
         path: str,
         rect_mode: int = const.CORNER,
-        wrap_mode: int = const.CORNER,
+        wrap_mode: int = const.CLAMP,
     ):
         super().__init__(scene, x, y, width, height)
         self.path = path
