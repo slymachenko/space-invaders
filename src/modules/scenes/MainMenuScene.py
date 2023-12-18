@@ -4,7 +4,6 @@ from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextur
 from src.modules.nodes.rects.texture_rects.buttons.ChangeSceneButton import (
     ChangeSceneButton,
 )
-
 from src.modules.scenes.PlayScene import PlayScene
 
 # ABSTRACT
@@ -12,20 +11,20 @@ from src.abstracts.scenes.Scene import Scene
 
 # TYPES
 from src.abstracts.nodes.Node import Node
-from src.core.Renderer import Renderer
 from src.core.InputHandler import InputHandler
 from src.core.Updater import Updater
+from src.core.Renderer import Renderer
 
 
 class MainMenuScene(Scene):
     nodes: list[Node]
 
     def __init__(
-        self, renderer: Renderer, input_handler: InputHandler, updater: Updater
+        self, input_handler: InputHandler, updater: Updater, renderer: Renderer
     ):
-        self.renderer = renderer
         self.input_handler = input_handler
         self.updater = updater
+        self.renderer = renderer
         self.nodes = list()
 
         self.setup()
@@ -93,7 +92,7 @@ class MainMenuScene(Scene):
                 200,
                 50,
                 "assets/play_btn.png",
-                PlayScene(self.renderer, self.input_handler, self.updater),
+                PlayScene(self.input_handler, self.updater, self.renderer),
                 rect_mode=const.CENTER,
                 wrap_mode=const.CLAMP,
             )

@@ -7,8 +7,8 @@ class Updater:
         self.game = game
 
         # game screen setup
-        screen_width: int = game.renderer.screen_width
-        screen_height: int = game.renderer.screen_height
+        screen_width: int = game.screen_width
+        screen_height: int = game.screen_height
 
         self.game_screen_x: Tuple[int, int] = (
             (screen_width - screen_height) // 2,

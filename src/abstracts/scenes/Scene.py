@@ -1,23 +1,24 @@
 from abc import ABC
 
-from src.abstracts.Renderable import Renderable
+# ABSTRACTS
 from src.abstracts.Inputable import Inputable
 from src.abstracts.Updateable import Updateable
+from src.abstracts.Renderable import Renderable
 
 # TYPES
-from src.core.Renderer import Renderer
 from src.core.InputHandler import InputHandler
 from src.core.Updater import Updater
+from src.core.Renderer import Renderer
 
 
 class Scene(Inputable, Updateable, Renderable, ABC):
-    renderer: Renderer
-    updater: Updater
     input_handler: InputHandler
+    updater: Updater
+    renderer: Renderer
 
     def __init__(
-        self, renderer: Renderer, input_handler: InputHandler, updater: Updater
+        self, input_handler: InputHandler, updater: Updater, renderer: Renderer
     ):
-        self.renderer = renderer
         self.input_handler = input_handler
         self.updater = updater
+        self.renderer = renderer

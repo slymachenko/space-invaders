@@ -19,11 +19,12 @@ class PlayScene(Scene):
     nodes: list[Node]
 
     def __init__(
-        self, renderer: Renderer, input_handler: InputHandler, updater: Updater
+        self, input_handler: InputHandler, updater: Updater, renderer: Renderer
     ):
-        self.renderer = renderer
         self.input_handler = input_handler
         self.updater = updater
+        self.renderer = renderer
+
         self.nodes = list()
 
         self.setup()
