@@ -1,9 +1,7 @@
-from pygame.locals import MOUSEBUTTONDOWN
 from pygame import mouse
 
 # CUSTOM MODULES
 from src.utils import constants as const
-from src.modules.scenes.PlayScene import PlayScene
 
 # ABSTRACTS
 from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
@@ -13,7 +11,7 @@ from src.abstracts.nodes.rects.texture_rects.buttons.Button import Button
 from src.abstracts.scenes.Scene import Scene
 
 
-class PlayButton(StaticTextureRect, Button):
+class ChangeSceneButton(Button, StaticTextureRect):
     def __init__(
         self,
         scene: Scene,
@@ -22,22 +20,19 @@ class PlayButton(StaticTextureRect, Button):
         width: int,
         height: int,
         path: str,
+        target_scene: Scene,
         rect_mode: int = const.CORNER,
         wrap_mode: int = const.CLAMP,
     ):
-        super().__init__(scene, x, y, width, height, path, rect_mode, wrap_mode)
+        super().__init__(
+            scene, x, y, width, height, path, target_scene, rect_mode, wrap_mode
+        )
 
     def input(self) -> None:
         if self.scene.input_handler.events["click"]:
             mouse_pos = mouse.get_pos()
             if self.rect.collidepoint(mouse_pos):
-                self.scene.updater.switch_scene(
-                    PlayScene(
-                        self.scene.renderer,
-                        self.scene.input_handler,
-                        self.scene.updater,
-                    )
-                )
+                self.scene.updater.switch_scene(self.target_scene)
 
     def update(self) -> None:
         pass

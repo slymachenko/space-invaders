@@ -24,10 +24,13 @@ class Button(TextureRect, Inputable, Updateable, ABC):
         width: int,
         height: int,
         path: str,
+        target_scene: Scene,
         rect_mode: int = const.CORNER,
         wrap_mode: int = const.CLAMP,
     ):
         super().__init__(scene, x, y, width, height, path, rect_mode, wrap_mode)
+
+        self.target_scene = target_scene
 
     def input(self) -> None:
         pass
