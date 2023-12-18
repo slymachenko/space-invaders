@@ -12,8 +12,8 @@ class Core(ABC):
     screen_height: int
     fps: int
 
-    updater: Updater
     input_handler: InputHandler
+    updater: Updater
     renderer: Renderer
 
     current_scene: Scene

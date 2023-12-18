@@ -2,20 +2,23 @@ from src.core.InputHandler import InputHandler
 from src.core.Updater import Updater
 from src.core.Renderer import Renderer
 
+# ABSTRACTS
+from src.abstracts.Core import Core
+
 # TYPES
 from src.abstracts.scenes.Scene import Scene
 
 
-class Core:
+class Core(Core):
     screen_width: int
     screen_height: int
     fps: int
 
-    current_scene: Scene
-
     input_handler: InputHandler
     updater: Updater
     renderer: Renderer
+
+    current_scene: Scene
 
     def __init__(
         self,
