@@ -1,6 +1,7 @@
 # CUSTOM MODULES
 from src.utils import constants as const
 from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
+from src.modules.nodes.rects.texts.StaticText import StaticText
 from src.modules.nodes.rects.texture_rects.entities.PlayerEntity import PlayerEntity
 from src.modules.nodes.rects.texture_rects.entities.AlienEntity import AlienEntity
 from src.modules.nodes.rects.texture_rects.projectiles.PlayerProjectile import (
@@ -20,6 +21,7 @@ from src.core.Updater import Updater
 
 class PlayScene(Scene):
     nodes: list[Node]
+    score: int
 
     def __init__(
         self, input_handler: InputHandler, updater: Updater, renderer: Renderer
@@ -29,12 +31,16 @@ class PlayScene(Scene):
         self.renderer = renderer
 
         self.nodes = list()
+        self.score = 0
 
         self.setup()
 
     def setup(self) -> None:
         # generate background
         self.gen_bg()
+
+        # generate score
+        self.gen_score()
 
         # generate player entity
         self.gen_player()
@@ -81,6 +87,14 @@ class PlayScene(Scene):
                 "assets/bg_floor.png",
             )
         )
+
+    def gen_score(self) -> None:
+        # score text
+        self.score_text = StaticText(
+            self, 20, 20, 40, 20, f"Score: {self.score}", "Comic Sans MS"
+        )
+
+        self.nodes.append(self.score_text)
 
     def gen_player(self) -> None:
         # player entity
@@ -193,6 +207,9 @@ class PlayScene(Scene):
             return True
         return False
 
+    def update_score_text(self) -> None:
+        self.score_text.text = f"Score: {self.score}"
+
     def input(self) -> None:
         for node in self.nodes:
             if hasattr(node, "input") and callable(node.input):
@@ -212,6 +229,8 @@ class PlayScene(Scene):
                     ) and projectile.rect.colliderect(node.rect):
                         self.remove_node(projectile)
                         self.remove_node(node)
+                        self.score += 10
+                        self.update_score_text()
 
                 are_aliens = True
 
