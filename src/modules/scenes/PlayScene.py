@@ -56,7 +56,7 @@ class PlayScene(Scene):
                 0,
                 0,
                 self.renderer.screen_width,
-                self.renderer.screen_height * 0.8,  # 60% screen height
+                self.renderer.screen_height * 0.6,  # 60% screen height
                 "assets/bg_sky.png",
             )
         )
@@ -66,7 +66,7 @@ class PlayScene(Scene):
             StaticTextureRect(
                 self,
                 0,
-                (self.renderer.screen_height * 0.8)
+                (self.renderer.screen_height * 0.6)
                 - self.nodes[-1].img.get_size()[
                     1
                 ],  # 60% screen height - bg_sky img height
@@ -81,7 +81,7 @@ class PlayScene(Scene):
             StaticTextureRect(
                 self,
                 0,
-                self.renderer.screen_height * 0.8,  # 60% screen height
+                self.renderer.screen_height * 0.6,  # 60% screen height
                 self.renderer.screen_width,
                 self.renderer.screen_height,
                 "assets/bg_floor.png",
@@ -102,7 +102,7 @@ class PlayScene(Scene):
             PlayerEntity(
                 self,
                 self.renderer.screen_width * 0.5,  # 50% screen weight
-                self.renderer.screen_height * 0.9,  # 60% screen height
+                self.renderer.screen_height * 0.8,  # 60% screen height
                 40,
                 40,
                 "assets/player.png",
@@ -194,8 +194,7 @@ class PlayScene(Scene):
                         wrap_mode=const.CLAMP,
                         speed=(10, 40),
                         direction=direction,
-                        # wait_time=600,
-                        wait_time=200,
+                        wait_time=300,
                     )
                 )
 
