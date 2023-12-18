@@ -1,10 +1,12 @@
+import sys
+
 # CUSTOM MODULES
 from src.utils import constants as const
 from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
 from src.modules.nodes.rects.texture_rects.buttons.ChangeSceneButton import (
     ChangeSceneButton,
 )
-from src.modules.scenes.PlayScene import PlayScene
+from src.modules.nodes.rects.texts.StaticText import StaticText
 
 # ABSTRACT
 from src.abstracts.scenes.Scene import Scene
@@ -30,14 +32,27 @@ class MainMenuScene(Scene):
         self.setup()
 
     def setup(self) -> None:
+        # load high score
+        self.score = self.load_high_score()
+
         # generate background
         self.gen_bg()
 
         # generate title
         self.gen_title()
 
+        # generate high score
+        self.gen_high_score()
+
         # generate play button
         self.gen_play_btn()
+
+    def load_high_score(self) -> int:
+        try:
+            with open("high_score.txt", "r") as file:
+                return int(file.read())
+        except FileNotFoundError:
+            return 0
 
     def gen_bg(self) -> None:
         # background sky
@@ -93,6 +108,14 @@ class MainMenuScene(Scene):
                 wrap_mode=const.CLAMP,
             )
         )
+
+    def gen_high_score(self) -> None:
+        # score text
+        self.score_text = StaticText(
+            self, 20, 20, 40, 20, f"High Score: {self.score}", "Comic Sans MS"
+        )
+
+        self.nodes.append(self.score_text)
 
     def gen_play_btn(self) -> None:
         # play button

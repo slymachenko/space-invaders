@@ -25,6 +25,7 @@ class StaticText(
     ):
         super().__init__(scene, x, y, width, height, text, font_name)
         self.font = pygame.font.SysFont(self.font_name, 30)
+        self.surface = self.font.render(self.text, False, (207, 223, 165))
 
     def update(self) -> None:
         self.surface = self.font.render(self.text, False, (207, 223, 165))

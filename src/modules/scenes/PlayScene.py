@@ -235,6 +235,7 @@ class PlayScene(Scene):
                     if isinstance(
                         other_node, PlayerEntity
                     ) and other_node.rect.colliderect(node.rect):
+                        self.save_score()
                         self.updater.switch_scene("MainMenuScene")
 
                 are_aliens = True
@@ -246,3 +247,7 @@ class PlayScene(Scene):
         for node in self.nodes:
             if hasattr(node, "render") and callable(node.render):
                 node.render()
+
+    def save_score(self) -> None:
+        with open("high_score.txt", "w") as file:
+            file.write(str(self.score))
