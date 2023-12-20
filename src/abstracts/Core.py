@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 # TYPES
 from src.core.Updater import Updater
-from src.core.InputHandler import InputHandler
+from src.core.InputManager import InputManager
 from src.core.Renderer import Renderer
 from src.abstracts.scenes.Scene import Scene
 
@@ -12,7 +12,7 @@ class Core(ABC):
     screen_height: int
     fps: int
 
-    input_handler: InputHandler
+    input_manager: InputManager
     updater: Updater
     renderer: Renderer
 

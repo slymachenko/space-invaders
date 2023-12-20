@@ -46,11 +46,11 @@ class PlayerEntity(Entity, StaticTextureRect, Inputable):
         self.gen_bullet()
 
     def input(self) -> None:
-        if self.scene.input_handler.events["left"]:
+        if self.scene.input_manager.events["left"]:
             self.move((-1, 0))
-        if self.scene.input_handler.events["right"]:
+        if self.scene.input_manager.events["right"]:
             self.move((1, 0))
-        if self.scene.input_handler.events["shoot"]:
+        if self.scene.input_manager.events["shoot"]:
             self.shoot()
 
     def update(self) -> None:

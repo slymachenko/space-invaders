@@ -6,19 +6,19 @@ from src.abstracts.Updateable import Updateable
 from src.abstracts.Renderable import Renderable
 
 # TYPES
-from src.core.InputHandler import InputHandler
+from src.core.InputManager import InputManager
 from src.core.Updater import Updater
 from src.core.Renderer import Renderer
 
 
 class Scene(Inputable, Updateable, Renderable, ABC):
-    input_handler: InputHandler
+    input_manager: InputManager
     updater: Updater
     renderer: Renderer
 
     def __init__(
-        self, input_handler: InputHandler, updater: Updater, renderer: Renderer
+        self, input_manager: InputManager, updater: Updater, renderer: Renderer
     ):
-        self.input_handler = input_handler
+        self.input_manager = input_manager
         self.updater = updater
         self.renderer = renderer

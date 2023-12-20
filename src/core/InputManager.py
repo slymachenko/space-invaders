@@ -4,7 +4,7 @@ import sys
 from pygame.locals import K_LEFT, K_RIGHT, K_SPACE
 
 
-class InputHandler:
+class InputManager:
     is_game_running: bool
     events: dict["string":int]
 

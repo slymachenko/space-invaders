@@ -29,7 +29,7 @@ class ChangeSceneButton(Button, StaticTextureRect):
         )
 
     def input(self) -> None:
-        if self.scene.input_handler.events["click"]:
+        if self.scene.input_manager.events["click"]:
             mouse_pos = mouse.get_pos()
             if self.rect.collidepoint(mouse_pos):
                 self.scene.updater.switch_scene(self.target_scene)

@@ -15,7 +15,7 @@ from src.abstracts.scenes.Scene import Scene
 from typing import Tuple
 from src.abstracts.nodes.Node import Node
 from src.core.Renderer import Renderer
-from src.core.InputHandler import InputHandler
+from src.core.InputManager import InputManager
 from src.core.Updater import Updater
 
 
@@ -24,9 +24,9 @@ class PlayScene(Scene):
     score: int
 
     def __init__(
-        self, input_handler: InputHandler, updater: Updater, renderer: Renderer
+        self, input_manager: InputManager, updater: Updater, renderer: Renderer
     ):
-        self.input_handler = input_handler
+        self.input_manager = input_manager
         self.updater = updater
         self.renderer = renderer
 
