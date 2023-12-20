@@ -1,21 +1,19 @@
-# CUSTOM MODULES
 from src.utils import constants as const
 
-# ABSTRACTS
-from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
-from src.abstracts.nodes.rects.texture_rects.entities.Entity import Entity
-from src.abstracts.Inputable import Inputable
-from src.modules.nodes.rects.texture_rects.projectiles.PlayerProjectile import (
+# BASES
+from src.bases.nodes.Entity import Entity
+from src.bases.Inputable import Inputable
+from src.nodes.projectiles.PlayerProjectile import (
     PlayerProjectile,
 )
 
 # TYPES
 from typing import Tuple
-from src.abstracts.scenes.Scene import Scene
+from src.bases.scenes.Scene import Scene
 from pygame.rect import Rect
 
 
-class PlayerEntity(Entity, StaticTextureRect, Inputable):
+class PlayerEntity(Entity, Inputable):
     rect: Rect
     speed: int
 
@@ -56,27 +54,14 @@ class PlayerEntity(Entity, StaticTextureRect, Inputable):
     def update(self) -> None:
         self.handle_borders()
 
-    def move(self, vec: Tuple[int, int]) -> None:
-        match vec[0]:
-            case 1:
-                self.x += self.speed[0]
-            case -1:
-                self.x -= self.speed[0]
-
-        match vec[1]:
-            case 1:
-                self.y += self.speed[1]
-            case -1:
-                self.y -= self.speed[1]
-
     def handle_borders(self) -> None:
         game_screen_x: Tuple[int, int] = self.scene.updater.game_screen_x
-        img_size: Tuple[int, int] = self.img.get_size()
+        sprite_size: Tuple[int, int] = self.sprite.get_size()
 
         if self.x < game_screen_x[0]:
             self.x = game_screen_x[0]
-        elif self.x > game_screen_x[1] - img_size[0]:
-            self.x = game_screen_x[1] - img_size[0]
+        elif self.x > game_screen_x[1] - sprite_size[0]:
+            self.x = game_screen_x[1] - sprite_size[0]
 
     def shoot(self):
         if not self.scene.check_node(self.bullet):
@@ -84,10 +69,10 @@ class PlayerEntity(Entity, StaticTextureRect, Inputable):
             self.scene.nodes.append(self.bullet)
 
     def gen_bullet(self) -> None:
-        img_size = self.img.get_size()
+        sprite_size = self.sprite.get_size()
         self.bullet = PlayerProjectile(
             self.scene,
-            self.x + img_size[0] / 2,
+            self.x + sprite_size[0] / 2,
             self.y,
             2,
             1,

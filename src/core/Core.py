@@ -1,15 +1,18 @@
+from pygame import quit
+
+from pygame.image import load
+from pygame.display import set_caption
+from pygame.display import set_icon
+
 from src.core.InputManager import InputManager
 from src.core.Updater import Updater
 from src.core.Renderer import Renderer
 
-# ABSTRACTS
-from src.abstracts.Core import Core
-
 # TYPES
-from src.abstracts.scenes.Scene import Scene
+from src.bases.scenes.Scene import Scene
 
 
-class Core(Core):
+class Core:
     screen_width: int
     screen_height: int
     fps: int
@@ -31,7 +34,7 @@ class Core(Core):
         self.screen_height = screen_height
         self.fps = fps
 
-        self.input_manager = InputManager()
+        self.input_manager = InputManager(self)
         self.updater = Updater(self)
         self.renderer = Renderer(self.screen_width, self.screen_height, self.fps)
 
@@ -39,11 +42,21 @@ class Core(Core):
             self.input_manager, self.updater, self.renderer
         )
 
+        self.setup()
+
+    def setup(self) -> None:
+        # CAPTION
+        set_caption("Space Invaders - by slymachenko")
+
+        # ICON
+        icon = load("assets/imgs/icon.png")
+        set_icon(icon)
+
     def switch_scene(self, new_scene: Scene) -> None:
         self.current_scene = new_scene(self.input_manager, self.updater, self.renderer)
 
     def run(self) -> None:
-        while self.input_manager.is_game_running:
+        while self.updater.is_game_running:
             # INPUT HANDLER
             self.input_manager.input((self.current_scene))
 
@@ -53,4 +66,4 @@ class Core(Core):
             # RENDER
             self.renderer.render((self.current_scene))
 
-        self.input_manager.quit()
+        quit()

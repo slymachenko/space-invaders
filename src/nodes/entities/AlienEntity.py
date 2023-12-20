@@ -1,19 +1,17 @@
-# CUSTOM MODULES
 from src.utils import constants as const
 
-# ABSTRACTS
-from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
-from src.abstracts.nodes.rects.texture_rects.entities.Entity import Entity
-from src.modules.nodes.rects.texture_rects.projectiles.PlayerProjectile import (
+# BASES
+from src.bases.nodes.Entity import Entity
+from src.nodes.projectiles.PlayerProjectile import (
     PlayerProjectile,
 )
 
 # TYPES
 from typing import Tuple
-from src.abstracts.scenes.Scene import Scene
+from src.bases.scenes.Scene import Scene
 
 
-class AlienEntity(Entity, StaticTextureRect):
+class AlienEntity(Entity):
     direction: list[int]
     animate_step: int
 
@@ -49,43 +47,31 @@ class AlienEntity(Entity, StaticTextureRect):
         self.setup()
 
     def setup(self) -> None:
-        self.img = self.sprite.subsurface(
-            (0, 0, self.sprite_size[0] / 2, self.sprite_size[1])
-        )
-        self.rect = self.img.get_rect(topleft=(self.x, self.y))
-        self.animate_step = 0
-        self.step_timer = self.scene.renderer.ticks
+        # self.img = self.sprite.subsurface(
+        #     (0, 0, self.sprite_size[0] / 2, self.sprite_size[1])
+        # )
+        # self.rect = self.img.get_rect(topleft=(self.x, self.y))
+        # self.animate_step = 0
+        # self.step_timer = self.scene.renderer.ticks
         self.gen_bullet()
 
     def update(self) -> None:
-        now = self.scene.renderer.ticks
-        if now - self.step_timer >= self.wait_time:
-            self.snake_move()
-            self.animate()
+        pass
+        # now = self.scene.renderer.ticks
+        # if now - self.step_timer >= self.wait_time:
+        #     self.snake_move()
+        #     self.animate()
 
-            self.step_timer = now
+        #     self.step_timer = now
 
-        self.handle_borders()
-        self.rect.topleft = (self.x, self.y)
+        # self.handle_borders()
+        # self.rect.topleft = (self.x, self.y)
 
     def snake_move(self) -> None:
         self.move(self.direction)
 
         if self.direction[1] == 1:
             self.direction[1] = 0
-
-    def move(self, vec: Tuple[int, int]) -> None:
-        match vec[0]:
-            case 1:
-                self.x += self.speed[0]
-            case -1:
-                self.x -= self.speed[0]
-
-        match vec[1]:
-            case 1:
-                self.y += self.speed[1]
-            case -1:
-                self.y -= self.speed[1]
 
     def animate(self) -> None:
         match self.animate_step:
@@ -131,9 +117,10 @@ class AlienEntity(Entity, StaticTextureRect):
             self.scene.nodes.append(self.bullet)
 
     def gen_bullet(self) -> None:
+        sprite_size = self.sprite.get_size()
         self.bullet = PlayerProjectile(
             self.scene,
-            self.x + self.img_size[0] / 2,
+            self.x + sprite_size[0] / 2,
             self.y,
             2,
             1,

@@ -1,5 +1,5 @@
 from src.core.Core import Core
-from src.modules.scenes.MainMenuScene import MainMenuScene
+from src.scenes.MainMenuScene import MainMenuScene
 
 
 def main():

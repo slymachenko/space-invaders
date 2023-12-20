@@ -5,11 +5,10 @@ from pygame.locals import K_LEFT, K_RIGHT, K_SPACE
 
 
 class InputManager:
-    is_game_running: bool
     events: dict["string":int]
 
-    def __init__(self):
-        self.is_game_running = True
+    def __init__(self, core):
+        self.core = core
 
     def input(self, *scenes) -> None:
         self.events = {"click": 0, "left": 0, "right": 0, "shoot": 0}
@@ -18,7 +17,7 @@ class InputManager:
         for event in pygame.event.get():
             match event.type:
                 case pygame.QUIT:
-                    self.is_game_running = False
+                    self.core.updater.quit()
                 case pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         self.events["click"] = 1
@@ -36,7 +35,3 @@ class InputManager:
         # Call input for each node
         for scene in scenes:
             scene.input()
-
-    def quit(self) -> None:
-        pygame.quit()
-        sys.exit(0)

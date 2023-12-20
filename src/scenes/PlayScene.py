@@ -1,19 +1,18 @@
-# CUSTOM MODULES
 from src.utils import constants as const
-from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
-from src.modules.nodes.rects.texts.StaticText import StaticText
-from src.modules.nodes.rects.texture_rects.entities.PlayerEntity import PlayerEntity
-from src.modules.nodes.rects.texture_rects.entities.AlienEntity import AlienEntity
-from src.modules.nodes.rects.texture_rects.projectiles.PlayerProjectile import (
+from src.bases.nodes.Sprite import Sprite
+from src.bases.nodes.Text import Text
+from src.nodes.entities.PlayerEntity import PlayerEntity
+from src.nodes.entities.AlienEntity import AlienEntity
+from src.nodes.projectiles.PlayerProjectile import (
     PlayerProjectile,
 )
 
-# ABSTRACT
-from src.abstracts.scenes.Scene import Scene
+# BASES
+from src.bases.scenes.Scene import Scene
 
 # TYPES
 from typing import Tuple
-from src.abstracts.nodes.Node import Node
+from src.bases.nodes.Node import Node
 from src.core.Renderer import Renderer
 from src.core.InputManager import InputManager
 from src.core.Updater import Updater
@@ -51,7 +50,7 @@ class PlayScene(Scene):
     def gen_bg(self) -> None:
         # background sky
         self.nodes.append(
-            StaticTextureRect(
+            Sprite(
                 self,
                 0,
                 0,
@@ -63,11 +62,11 @@ class PlayScene(Scene):
 
         # background buildings
         self.nodes.append(
-            StaticTextureRect(
+            Sprite(
                 self,
                 0,
                 (self.renderer.screen_height * 0.6)
-                - self.nodes[-1].img.get_size()[
+                - self.nodes[-1].sprite.get_size()[
                     1
                 ],  # 60% screen height - bg_sky img height
                 self.renderer.screen_width,
@@ -78,7 +77,7 @@ class PlayScene(Scene):
 
         # background floor
         self.nodes.append(
-            StaticTextureRect(
+            Sprite(
                 self,
                 0,
                 self.renderer.screen_height * 0.6,  # 60% screen height
@@ -90,8 +89,16 @@ class PlayScene(Scene):
 
     def gen_score(self) -> None:
         # score text
-        self.score_text = StaticText(
-            self, 20, 20, 40, 20, f"Score: {self.score}", "Comic Sans MS"
+        self.score_text = Text(
+            self,
+            20,
+            20,
+            40,
+            20,
+            f"Score: {self.score}",
+            color=const.TEXT_COLOR,
+            font_name="assets/fonts/minecraft.ttf",
+            font_size=32,
         )
 
         self.nodes.append(self.score_text)
@@ -194,7 +201,7 @@ class PlayScene(Scene):
                         wrap_mode=const.CLAMP,
                         speed=(10, 40),
                         direction=direction,
-                        wait_time=300,
+                        wait_time=1,
                     )
                 )
 
@@ -209,18 +216,12 @@ class PlayScene(Scene):
     def update_score_text(self) -> None:
         self.score_text.text = f"Score: {self.score}"
 
-    def input(self) -> None:
-        for node in self.nodes:
-            if hasattr(node, "input") and callable(node.input):
-                node.input()
-
     def update(self) -> None:
+        super().update()
+
         are_aliens: bool = False
 
         for node in self.nodes:
-            if hasattr(node, "update") and callable(node.update):
-                node.update()
-
             if isinstance(node, AlienEntity):
                 for other_node in self.nodes:
                     if isinstance(
@@ -239,13 +240,8 @@ class PlayScene(Scene):
 
                 are_aliens = True
 
-        if not are_aliens:
-            self.gen_aliens()
-
-    def render(self) -> None:
-        for node in self.nodes:
-            if hasattr(node, "render") and callable(node.render):
-                node.render()
+        # if not are_aliens:
+        #     self.gen_aliens()
 
     def save_score(self) -> None:
         with open("high_score.txt", "w") as file:

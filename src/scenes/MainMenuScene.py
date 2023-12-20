@@ -1,18 +1,17 @@
-import sys
-
-# CUSTOM MODULES
 from src.utils import constants as const
-from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
-from src.modules.nodes.rects.texture_rects.buttons.ChangeSceneButton import (
+
+from src.bases.nodes.Sprite import Sprite
+from src.nodes.buttons.ChangeSceneButton import (
     ChangeSceneButton,
 )
-from src.modules.nodes.rects.texts.StaticText import StaticText
+from src.bases.nodes.Text import Text
 
-# ABSTRACT
-from src.abstracts.scenes.Scene import Scene
+# BASES
+from src.bases.scenes.Scene import Scene
 
 # TYPES
-from src.abstracts.nodes.Node import Node
+from typing import Tuple
+from src.bases.nodes.Node import Node
 from src.core.InputManager import InputManager
 from src.core.Updater import Updater
 from src.core.Renderer import Renderer
@@ -33,7 +32,7 @@ class MainMenuScene(Scene):
 
     def setup(self) -> None:
         # load high score
-        self.score = self.load_high_score()
+        self.high_score = self.load_high_score()
 
         # generate background
         self.gen_bg()
@@ -57,7 +56,7 @@ class MainMenuScene(Scene):
     def gen_bg(self) -> None:
         # background sky
         self.nodes.append(
-            StaticTextureRect(
+            Sprite(
                 self,
                 0,
                 0,
@@ -67,15 +66,15 @@ class MainMenuScene(Scene):
             )
         )
 
+        bg_sky_sprite_size: Tuple[int, int] = self.nodes[-1].sprite.get_size()
+
         # background buildings
         self.nodes.append(
-            StaticTextureRect(
+            Sprite(
                 self,
                 0,
                 (self.renderer.screen_height * 0.6)
-                - self.nodes[-1].img.get_size()[
-                    1
-                ],  # 60% screen height - bg_sky img height
+                - bg_sky_sprite_size[1],  # 60% screen height - bg_sky img height
                 self.renderer.screen_width,
                 1,
                 "assets/imgs/bg_buildings.png",
@@ -84,7 +83,7 @@ class MainMenuScene(Scene):
 
         # background floor
         self.nodes.append(
-            StaticTextureRect(
+            Sprite(
                 self,
                 0,
                 self.renderer.screen_height * 0.6,  # 60% screen height
@@ -97,7 +96,7 @@ class MainMenuScene(Scene):
     def gen_title(self) -> None:
         # title
         self.nodes.append(
-            StaticTextureRect(
+            Sprite(
                 self,
                 self.renderer.screen_width * 0.5,  # 50% screen width
                 self.renderer.screen_height * 0.3,  # 30% screen height
@@ -111,8 +110,16 @@ class MainMenuScene(Scene):
 
     def gen_high_score(self) -> None:
         # score text
-        self.score_text = StaticText(
-            self, 20, 20, 40, 20, f"High Score: {self.score}", "Comic Sans MS"
+        self.score_text = Text(
+            self,
+            20,
+            20,
+            40,
+            20,
+            f"High Score: {self.high_score}",
+            color=const.TEXT_COLOR,
+            font_name="assets/fonts/minecraft.ttf",
+            font_size=32,
         )
 
         self.nodes.append(self.score_text)
@@ -132,18 +139,3 @@ class MainMenuScene(Scene):
                 wrap_mode=const.CLAMP,
             )
         )
-
-    def input(self) -> None:
-        for node in self.nodes:
-            if hasattr(node, "input") and callable(node.input):
-                node.input()
-
-    def update(self) -> None:
-        for node in self.nodes:
-            if hasattr(node, "update") and callable(node.update):
-                node.update()
-
-    def render(self) -> None:
-        for node in self.nodes:
-            if hasattr(node, "render") and callable(node.render):
-                node.render()

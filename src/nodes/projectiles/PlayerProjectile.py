@@ -1,16 +1,16 @@
 # CUSTOM MODULES
 from src.utils import constants as const
 
-# ABSTRACTS
-from src.modules.nodes.rects.texture_rects.StaticTextureRect import StaticTextureRect
-from src.abstracts.nodes.rects.texture_rects.projectiles.Projectile import Projectile
+# BASES
+from src.bases.nodes.Sprite import Sprite
+from src.bases.nodes.Projectile import Projectile
 
 # TYPES
 from typing import Tuple
-from src.abstracts.scenes.Scene import Scene
+from src.bases.scenes.Scene import Scene
 
 
-class PlayerProjectile(Projectile, StaticTextureRect):
+class PlayerProjectile(Projectile, Sprite):
     speed: int
 
     def __init__(
@@ -57,7 +57,7 @@ class PlayerProjectile(Projectile, StaticTextureRect):
 
     def handle_borders(self) -> None:
         game_screen_y: Tuple[int, int] = self.scene.updater.game_screen_y
-        img_size: Tuple[int, int] = self.img.get_size()
+        sprite_size: Tuple[int, int] = self.sprite.get_size()
 
-        if self.y < game_screen_y[0] or self.y > game_screen_y[1] - img_size[1]:
+        if self.y < game_screen_y[0] or self.y > game_screen_y[1] - sprite_size[1]:
             self.scene.remove_node(self)

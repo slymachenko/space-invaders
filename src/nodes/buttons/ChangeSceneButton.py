@@ -1,21 +1,14 @@
-from abc import ABC
-
-# CUSTOM MODULES
+from pygame import mouse
 from src.utils import constants as const
 
-# ABSTRACTS
-from src.abstracts.nodes.rects.texture_rects.TextureRect import TextureRect
-from src.abstracts.Inputable import Inputable
-from src.abstracts.Updateable import Updateable
+# BASES
+from src.bases.nodes.Button import Button
 
 # TYPES
-from src.abstracts.scenes.Scene import Scene
-from pygame.rect import Rect
+from src.bases.scenes.Scene import Scene
 
 
-class Button(TextureRect, Inputable, Updateable, ABC):
-    rect: Rect
-
+class ChangeSceneButton(Button):
     def __init__(
         self,
         scene: Scene,
@@ -29,11 +22,10 @@ class Button(TextureRect, Inputable, Updateable, ABC):
         wrap_mode: int = const.CLAMP,
     ):
         super().__init__(scene, x, y, width, height, path, rect_mode, wrap_mode)
-
         self.target_scene = target_scene
 
     def input(self) -> None:
-        pass
-
-    def update(self) -> None:
-        pass
+        if self.scene.input_manager.events["click"]:
+            mouse_pos = mouse.get_pos()
+            if self.rect.collidepoint(mouse_pos):
+                self.scene.updater.switch_scene(self.target_scene)

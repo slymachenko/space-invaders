@@ -1,7 +1,7 @@
 import pygame
 
 # ABSTRACT
-from src.abstracts.nodes.rects.texts.Text import Text
+from src.abstracts.nodes.Text import Text
 
 # TYPES
 from src.abstracts.scenes.Scene import Scene
