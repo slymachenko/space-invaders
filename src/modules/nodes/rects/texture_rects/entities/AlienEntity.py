@@ -137,7 +137,7 @@ class AlienEntity(Entity, StaticTextureRect):
             self.y,
             2,
             1,
-            "assets/bullet1.png",
+            "assets/imgs/bullet1.png",
             rect_mode=const.CENTER,
             wrap_mode=const.CLAMP,
             speed=15,

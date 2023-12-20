@@ -63,7 +63,7 @@ class MainMenuScene(Scene):
                 0,
                 self.renderer.screen_width,
                 self.renderer.screen_height * 0.6,  # 60% screen height
-                "assets/bg_sky.png",
+                "assets/imgs/bg_sky.png",
             )
         )
 
@@ -78,7 +78,7 @@ class MainMenuScene(Scene):
                 ],  # 60% screen height - bg_sky img height
                 self.renderer.screen_width,
                 1,
-                "assets/bg_buildings.png",
+                "assets/imgs/bg_buildings.png",
             )
         )
 
@@ -90,7 +90,7 @@ class MainMenuScene(Scene):
                 self.renderer.screen_height * 0.6,  # 60% screen height
                 self.renderer.screen_width,
                 self.renderer.screen_height,
-                "assets/bg_floor.png",
+                "assets/imgs/bg_floor.png",
             )
         )
 
@@ -103,7 +103,7 @@ class MainMenuScene(Scene):
                 self.renderer.screen_height * 0.3,  # 30% screen height
                 400,
                 200,
-                "assets/title.png",
+                "assets/imgs/title.png",
                 rect_mode=const.CENTER,
                 wrap_mode=const.CLAMP,
             )
@@ -126,7 +126,7 @@ class MainMenuScene(Scene):
                 self.renderer.screen_height * 0.7,  # 70% screen height
                 200,
                 50,
-                "assets/play_btn.png",
+                "assets/imgs/play_btn.png",
                 "PlayScene",
                 rect_mode=const.CENTER,
                 wrap_mode=const.CLAMP,

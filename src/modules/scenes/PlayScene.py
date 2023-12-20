@@ -57,7 +57,7 @@ class PlayScene(Scene):
                 0,
                 self.renderer.screen_width,
                 self.renderer.screen_height * 0.6,  # 60% screen height
-                "assets/bg_sky.png",
+                "assets/imgs/bg_sky.png",
             )
         )
 
@@ -72,7 +72,7 @@ class PlayScene(Scene):
                 ],  # 60% screen height - bg_sky img height
                 self.renderer.screen_width,
                 1,
-                "assets/bg_buildings.png",
+                "assets/imgs/bg_buildings.png",
             )
         )
 
@@ -84,7 +84,7 @@ class PlayScene(Scene):
                 self.renderer.screen_height * 0.6,  # 60% screen height
                 self.renderer.screen_width,
                 self.renderer.screen_height,
-                "assets/bg_floor.png",
+                "assets/imgs/bg_floor.png",
             )
         )
 
@@ -105,7 +105,7 @@ class PlayScene(Scene):
                 self.renderer.screen_height * 0.8,  # 60% screen height
                 40,
                 40,
-                "assets/player.png",
+                "assets/imgs/player.png",
                 rect_mode=const.CENTER,
                 wrap_mode=const.CLAMP,
                 speed=(10, 10),
@@ -133,7 +133,7 @@ class PlayScene(Scene):
         )
 
         self.gen_alien(
-            "assets/alien4.png",
+            "assets/imgs/alien4.png",
             screen_shift,
             alien_shift,
             offset,
@@ -141,7 +141,7 @@ class PlayScene(Scene):
         )
 
         self.gen_alien(
-            "assets/alien3.png",
+            "assets/imgs/alien3.png",
             screen_shift,
             alien_shift,
             offset,
@@ -150,7 +150,7 @@ class PlayScene(Scene):
         )
 
         self.gen_alien(
-            "assets/alien2.png",
+            "assets/imgs/alien2.png",
             screen_shift,
             alien_shift,
             offset,
@@ -159,7 +159,7 @@ class PlayScene(Scene):
         )
 
         self.gen_alien(
-            "assets/alien1.png",
+            "assets/imgs/alien1.png",
             screen_shift,
             alien_shift,
             offset,

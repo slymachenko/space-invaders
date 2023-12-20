@@ -43,7 +43,7 @@ class Renderer:
         pygame.display.set_caption("Space Invaders - by slymachenko")
 
         # ICON
-        icon = pygame.image.load("assets/icon.png")
+        icon = pygame.image.load("assets/imgs/icon.png")
         pygame.display.set_icon(icon)
 
     def render(self, *scenes) -> None:
