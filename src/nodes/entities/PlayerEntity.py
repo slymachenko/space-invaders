@@ -36,6 +36,7 @@ class PlayerEntity(Entity, Inputable):
             width,
             height,
             path,
+            1,
             rect_mode,
             wrap_mode,
             speed,

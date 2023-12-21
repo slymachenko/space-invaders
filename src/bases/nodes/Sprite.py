@@ -54,15 +54,15 @@ class Sprite(Node, Renderable):
         img_size_new: Tuple[int, int]
         aspect_ratio: float
 
-        img_size: Tuple[int, int] = self.sprite.get_size()
+        sprite_size: Tuple[int, int] = self.sprite.get_size()
 
         match self.wrap_mode:
             case const.REPEAT:
-                self.tiles_x = ceil(self.width / img_size[0])
-                self.tiles_y = ceil(self.height / img_size[1])
+                self.tiles_x = ceil(self.width / sprite_size[0])
+                self.tiles_y = ceil(self.height / sprite_size[1])
 
             case const.CLAMP:
-                aspect_ratio = img_size[0] / img_size[1]
+                aspect_ratio = sprite_size[0] / sprite_size[1]
 
                 if self.width > self.height:
                     img_size_new = (self.width, int(self.width / aspect_ratio))
@@ -73,8 +73,8 @@ class Sprite(Node, Renderable):
 
             case const.STRETCH:
                 img_size_new = (
-                    ceil(img_size[0] * self.width / img_size[0]),
-                    ceil(img_size[1] * self.height / img_size[1]),
+                    ceil(sprite_size[0] * self.width / sprite_size[0]),
+                    ceil(sprite_size[1] * self.height / sprite_size[1]),
                 )
 
                 self.sprite = scale(self.sprite, img_size_new)
@@ -90,10 +90,11 @@ class Sprite(Node, Renderable):
                 self.rect.topleft = (self.x, self.y)
 
     def render(self) -> None:
-        img_size: Tuple[int, int] = self.sprite.get_size()
+        sprite_size: Tuple[int, int] = self.sprite.get_size()
 
         for x in range(self.tiles_x):
             for y in range(self.tiles_y):
                 self.scene.renderer.screen.blit(
-                    self.sprite, (self.x + x * img_size[0], self.y + y * img_size[1])
+                    self.sprite,
+                    (self.x + x * sprite_size[0], self.y + y * sprite_size[1]),
                 )
