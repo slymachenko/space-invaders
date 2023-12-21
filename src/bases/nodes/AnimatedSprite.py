@@ -34,16 +34,23 @@ class AnimatedSprite(Sprite, Updateable):
 
         self.current_frame = 0
         self.sprite_sheet = self.sprite
-        # self.sprite = self.set_sprite()
+        self.animate()
 
     def update(self) -> None:
         pass
-        # self.sprite = self.set_sprite()
 
-    # def set_sprite(self) -> None:
-    #     width: int = self.sprite_sheet.get_width() // self.num_frames
-    #     height: int = self.sprite_sheet.get_height()
-    #     x = self.current_frame * width
-    #     y = 0
+    def update_frame(self) -> None:
+        self.current_frame = (self.current_frame + 1) % self.num_frames
 
-    #     self.sprite = Surface.
+    def animate(self) -> None:
+        sprite_size = self.sprite.get_size()
+        sprite_sheet_size = self.sprite_sheet.get_size()
+
+        self.sprite = self.sprite_sheet.subsurface(
+            self.current_frame * sprite_size[0],
+            0,
+            sprite_sheet_size[0] // self.num_frames,
+            sprite_sheet_size[1],
+        )
+
+        self.update_frame()

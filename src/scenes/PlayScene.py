@@ -197,11 +197,12 @@ class PlayScene(Scene):
                         30,
                         30,
                         path,
+                        2,
                         rect_mode=const.CORNER,
                         wrap_mode=const.CLAMP,
                         speed=(10, 40),
                         direction=direction,
-                        wait_time=1,
+                        wait_time=200,
                     )
                 )
 
