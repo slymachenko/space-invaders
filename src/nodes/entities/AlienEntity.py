@@ -1,9 +1,10 @@
+import random
 from src.utils import constants as const
 
 # BASES
 from src.bases.nodes.Entity import Entity
-from src.nodes.projectiles.PlayerProjectile import (
-    PlayerProjectile,
+from src.nodes.projectiles.AlienProjectile import (
+    AlienProjectile,
 )
 
 # TYPES
@@ -19,31 +20,27 @@ class AlienEntity(Entity):
         scene: Scene,
         x: int,
         y: int,
-        width: int,
-        height: int,
         path: str,
-        num_frames: int,
-        rect_mode: int = const.CORNER,
-        wrap_mode: int = const.CLAMP,
-        speed: Tuple[int, int] = (10, 10),
         direction: list[int] = [1, 0],
         wait_time: int = 10,
+        shoot_chance: int = 0,
     ):
         super().__init__(
             scene,
             x,
             y,
-            width,
-            height,
-            path,
-            num_frames,
-            rect_mode,
-            wrap_mode,
-            speed,
+            width=30,
+            height=30,
+            path=path,
+            num_frames=2,
+            rect_mode=const.CORNER,
+            wrap_mode=const.CLAMP,
+            speed=(10, 40),
         )
 
         self.direction = direction
         self.wait_time = wait_time
+        self.shoot_chance = shoot_chance
 
         self.setup()
 
@@ -52,6 +49,10 @@ class AlienEntity(Entity):
         self.gen_bullet()
 
     def update(self) -> None:
+        self.rect.topleft = (self.x, self.y)
+        if random.random() < self.shoot_chance:
+            self.shoot()
+
         now = self.scene.renderer.ticks
         if now - self.step_timer >= self.wait_time:
             self.snake_move()
@@ -60,7 +61,6 @@ class AlienEntity(Entity):
             self.step_timer = now
 
         self.handle_borders()
-        self.rect.topleft = (self.x, self.y)
 
     def snake_move(self) -> None:
         self.move(self.direction)
@@ -89,14 +89,4 @@ class AlienEntity(Entity):
 
     def gen_bullet(self) -> None:
         sprite_size = self.sprite.get_size()
-        self.bullet = PlayerProjectile(
-            self.scene,
-            self.x + sprite_size[0] / 2,
-            self.y,
-            2,
-            1,
-            "assets/imgs/bullet1.png",
-            rect_mode=const.CENTER,
-            wrap_mode=const.CLAMP,
-            speed=15,
-        )
+        self.bullet = AlienProjectile(self.scene, self.x + sprite_size[0] / 2, self.y)

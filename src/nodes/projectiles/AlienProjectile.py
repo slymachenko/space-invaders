@@ -10,7 +10,7 @@ from typing import Tuple
 from src.bases.scenes.Scene import Scene
 
 
-class PlayerProjectile(Projectile, Sprite):
+class AlienProjectile(Projectile, Sprite):
     speed: int
 
     def __init__(
@@ -23,16 +23,16 @@ class PlayerProjectile(Projectile, Sprite):
             scene,
             x,
             y,
-            width=2,
+            width=6,
             height=1,
-            path="assets/imgs/bullet1.png",
+            path="assets/imgs/bullet2.png",
             rect_mode=const.CORNER,
             wrap_mode=const.CLAMP,
-            speed=15,
+            speed=5,
         )
 
     def update(self) -> None:
-        self.move((0, -1))
+        self.move((0, 1))
         self.rect.topleft = (self.x, self.y)
         self.handle_borders()
 

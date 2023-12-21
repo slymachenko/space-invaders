@@ -53,6 +53,7 @@ class PlayerEntity(Entity, Inputable):
             self.shoot()
 
     def update(self) -> None:
+        self.rect.topleft = (self.x, self.y)
         self.handle_borders()
 
     def handle_borders(self) -> None:
@@ -71,14 +72,4 @@ class PlayerEntity(Entity, Inputable):
 
     def gen_bullet(self) -> None:
         sprite_size = self.sprite.get_size()
-        self.bullet = PlayerProjectile(
-            self.scene,
-            self.x + sprite_size[0] / 2,
-            self.y,
-            2,
-            1,
-            "assets/imgs/bullet1.png",
-            rect_mode=const.CENTER,
-            wrap_mode=const.CLAMP,
-            speed=15,
-        )
+        self.bullet = PlayerProjectile(self.scene, self.x + sprite_size[0] / 2, self.y)

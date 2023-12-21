@@ -8,6 +8,9 @@ from src.nodes.entities.AlienEntityManager import AlienEntityManager
 from src.nodes.projectiles.PlayerProjectile import (
     PlayerProjectile,
 )
+from src.nodes.projectiles.AlienProjectile import (
+    AlienProjectile,
+)
 
 # BASES
 from src.bases.scenes.Scene import Scene
@@ -41,7 +44,10 @@ class PlayScene(Scene):
             "assets/imgs/alien1.png",
         ]
         alien_lines = [1, 1, 2, 2]
-        self.alien_manager = AlienEntityManager(self, alien_paths, alien_lines)
+        alien_shoot_chances = [0.001, 0.001, 0, 0]
+        self.alien_manager = AlienEntityManager(
+            self, alien_paths, alien_lines, alien_shoot_chances
+        )
 
         self.setup()
 
@@ -163,14 +169,24 @@ class PlayScene(Scene):
                     if isinstance(
                         other_node, PlayerEntity
                     ) and other_node.rect.colliderect(node.rect):
-                        self.save_score()
-                        self.updater.switch_scene("MainMenuScene")
+                        self.end_game()
 
                 are_aliens = True
+
+            if isinstance(node, PlayerEntity):
+                for other_node in self.nodes:
+                    if isinstance(
+                        other_node, AlienProjectile
+                    ) and other_node.rect.colliderect(node.rect):
+                        self.end_game()
 
         if not are_aliens:
             self.alien_manager.gen_aliens()
             self.nodes += self.alien_manager.get_aliens()
+
+    def end_game(self) -> None:
+        self.save_score()
+        self.updater.switch_scene("MainMenuScene")
 
     def save_score(self) -> None:
         with open("high_score.txt", "w") as file:

@@ -21,6 +21,7 @@ class AlienEntityManager:
         scene: Scene,
         paths: List[str],
         lines: List[int],
+        shoot_chances: List[int],
         width: int = 10,
         height: int = 8,
         sprite_size: Tuple[int, int] = (30, 30),
@@ -29,6 +30,7 @@ class AlienEntityManager:
         self.scene = scene
         self.paths = paths
         self.lines = lines
+        self.shoot_chances = shoot_chances
         self.width = width
         self.height = height
         self.sprite_size = sprite_size
@@ -60,7 +62,12 @@ class AlienEntityManager:
         shift = 0
         for i, path in enumerate(self.paths):
             self.gen_alien(
-                path, screen_shift, alien_shift, (self.width, self.lines[i]), shift
+                path,
+                screen_shift,
+                alien_shift,
+                (self.width, self.lines[i]),
+                self.shoot_chances[i],
+                shift,
             )
 
             shift += self.lines[i]
@@ -71,6 +78,7 @@ class AlienEntityManager:
         screen_shift: Tuple[int, int],
         alien_shift: Tuple[int, int],
         size: Tuple[int, int],
+        shoot_chance: int,
         shift: int = 0,
     ) -> None:
         for i in range(0, size[0]):
@@ -84,15 +92,10 @@ class AlienEntityManager:
                         self.scene,
                         screen_shift[0] + alien_shift[0] + i * self.offset[0],
                         screen_shift[1] + alien_shift[1] + j * self.offset[1],
-                        self.sprite_size[0],
-                        self.sprite_size[1],
                         path,
-                        2,
-                        rect_mode=const.CORNER,
-                        wrap_mode=const.CLAMP,
-                        speed=(10, 40),
                         direction=direction,
                         wait_time=200,
+                        shoot_chance=shoot_chance,
                     )
                 )
 
