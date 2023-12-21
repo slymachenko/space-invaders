@@ -1,3 +1,4 @@
+from pygame import mixer
 import random
 from src.utils import constants as const
 
@@ -46,6 +47,8 @@ class AlienEntity(Entity):
 
     def setup(self) -> None:
         self.step_timer = self.scene.renderer.ticks
+        self.sound = mixer.Sound("assets/sounds/shot_alien.mp3")
+        self.sound.set_volume(0.2)
         self.gen_bullet()
 
     def update(self) -> None:
@@ -86,6 +89,7 @@ class AlienEntity(Entity):
         if not self.scene.check_node(self.bullet):
             self.gen_bullet()
             self.scene.nodes.append(self.bullet)
+            self.sound.play()
 
     def gen_bullet(self) -> None:
         sprite_size = self.sprite.get_size()

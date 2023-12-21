@@ -1,3 +1,4 @@
+from pygame import mixer
 from src.utils import constants as const
 
 # BASES
@@ -42,6 +43,8 @@ class PlayerEntity(Entity, Inputable):
             speed,
         )
 
+        self.sound = mixer.Sound("assets/sounds/shot_player.mp3")
+        self.sound.set_volume(0.2)
         self.gen_bullet()
 
     def input(self) -> None:
@@ -69,6 +72,7 @@ class PlayerEntity(Entity, Inputable):
         if not self.scene.check_node(self.bullet):
             self.gen_bullet()
             self.scene.nodes.append(self.bullet)
+            self.sound.play()
 
     def gen_bullet(self) -> None:
         sprite_size = self.sprite.get_size()
