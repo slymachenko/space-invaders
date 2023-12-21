@@ -181,6 +181,10 @@ class PlayScene(Scene):
                         self.end_game()
 
         if not are_aliens:
+            if self.alien_manager.wait_time > 100:
+                self.alien_manager.wait_time *= 0.75
+            else:
+                self.alien_manager.wait_time = 100
             self.alien_manager.gen_aliens()
             self.nodes += self.alien_manager.get_aliens()
 

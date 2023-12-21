@@ -26,6 +26,7 @@ class AlienEntityManager:
         height: int = 8,
         sprite_size: Tuple[int, int] = (30, 30),
         offset: Tuple[int, int] = (20, 10),
+        wait_time: int = 600,
     ):
         self.scene = scene
         self.paths = paths
@@ -35,6 +36,7 @@ class AlienEntityManager:
         self.height = height
         self.sprite_size = sprite_size
         self.offset = (self.sprite_size[0] + offset[0], self.sprite_size[1] + offset[1])
+        self.wait_time = wait_time
 
         self.entities = []
 
@@ -94,7 +96,7 @@ class AlienEntityManager:
                         screen_shift[1] + alien_shift[1] + j * self.offset[1],
                         path,
                         direction=direction,
-                        wait_time=200,
+                        wait_time=self.wait_time,
                         shoot_chance=shoot_chance,
                     )
                 )
