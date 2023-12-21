@@ -2,7 +2,6 @@
 from src.utils import constants as const
 
 # BASES
-from src.bases.nodes.Sprite import Sprite
 from src.bases.nodes.Projectile import Projectile
 
 # TYPES
@@ -10,7 +9,7 @@ from typing import Tuple
 from src.bases.scenes.Scene import Scene
 
 
-class PlayerProjectile(Projectile, Sprite):
+class PlayerProjectile(Projectile):
     speed: int
 
     def __init__(
