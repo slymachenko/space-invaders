@@ -1,5 +1,5 @@
+from pygame import mixer
 from pygame import quit
-
 from pygame.image import load
 from pygame.display import set_caption
 from pygame.display import set_icon
@@ -51,6 +51,12 @@ class Core:
         # ICON
         icon = load("assets/imgs/icon.png")
         set_icon(icon)
+
+        # MUSIC
+        mixer.init()
+        mixer.music.load("assets/sounds/music.mp3")
+        mixer.music.set_volume(0.2)
+        mixer.music.play(-1)
 
     def switch_scene(self, new_scene: Scene) -> None:
         self.current_scene = new_scene(self.input_manager, self.updater, self.renderer)
