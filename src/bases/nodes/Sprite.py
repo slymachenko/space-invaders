@@ -51,7 +51,7 @@ class Sprite(Node, Renderable):
         self.rect_mode_setup()
 
     def wrap_mode_setup(self) -> None:
-        img_size_new: Tuple[int, int]
+        sprite_size_new: Tuple[int, int]
         aspect_ratio: float
 
         sprite_size: Tuple[int, int] = self.sprite.get_size()
@@ -65,19 +65,16 @@ class Sprite(Node, Renderable):
                 aspect_ratio = sprite_size[0] / sprite_size[1]
 
                 if self.width > self.height:
-                    img_size_new = (self.width, int(self.width / aspect_ratio))
+                    sprite_size_new = (self.width, int(self.width / aspect_ratio))
                 else:
-                    img_size_new = (int(self.height * aspect_ratio), self.height)
+                    sprite_size_new = (int(self.height * aspect_ratio), self.height)
 
-                self.sprite = scale(self.sprite, img_size_new)
+                self.sprite = scale(self.sprite, sprite_size_new)
 
             case const.STRETCH:
-                img_size_new = (
-                    ceil(sprite_size[0] * self.width / sprite_size[0]),
-                    ceil(sprite_size[1] * self.height / sprite_size[1]),
-                )
+                sprite_size_new = (self.width, self.height)
 
-                self.sprite = scale(self.sprite, img_size_new)
+                self.sprite = scale(self.sprite, sprite_size_new)
 
     def rect_mode_setup(self) -> None:
         match self.rect_mode:

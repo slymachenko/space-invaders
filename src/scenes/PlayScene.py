@@ -2,7 +2,9 @@ from src.utils import constants as const
 from src.bases.nodes.Sprite import Sprite
 from src.bases.nodes.Text import Text
 from src.nodes.entities.PlayerEntity import PlayerEntity
+
 from src.nodes.entities.AlienEntity import AlienEntity
+from src.nodes.entities.AlienEntityManager import AlienEntityManager
 from src.nodes.projectiles.PlayerProjectile import (
     PlayerProjectile,
 )
@@ -21,6 +23,7 @@ from src.core.Updater import Updater
 class PlayScene(Scene):
     nodes: list[Node]
     score: int
+    alien_manager: AlienEntityManager
 
     def __init__(
         self, input_manager: InputManager, updater: Updater, renderer: Renderer
@@ -31,6 +34,14 @@ class PlayScene(Scene):
 
         self.nodes = list()
         self.score = 0
+        alien_paths = [
+            "assets/imgs/alien4.png",
+            "assets/imgs/alien3.png",
+            "assets/imgs/alien2.png",
+            "assets/imgs/alien1.png",
+        ]
+        alien_lines = [1, 1, 2, 2]
+        self.alien_manager = AlienEntityManager(self, alien_paths, alien_lines)
 
         self.setup()
 
@@ -120,91 +131,7 @@ class PlayScene(Scene):
         )
 
     def gen_aliens(self) -> None:
-        columns: int = 10
-
-        offset: Tuple[int, int] = (60, 40)
-
-        screen_shift: Tuple[int, int] = (
-            self.renderer.screen_width - self.updater.game_screen_x[1],
-            self.renderer.screen_height - self.updater.game_screen_y[1],
-        )
-
-        game_screen_width: int = (
-            self.updater.game_screen_x[1] - self.updater.game_screen_x[0]
-        )
-        last_alien_pos_x = (columns - 1) * offset[0]
-        aliens_width = last_alien_pos_x + 40
-        alien_shift: Tuple[int, int] = (
-            (game_screen_width - aliens_width) / 2,
-            self.updater.game_screen_y[1] * 0.2,
-        )
-
-        self.gen_alien(
-            "assets/imgs/alien4.png",
-            screen_shift,
-            alien_shift,
-            offset,
-            (columns, 1),
-        )
-
-        self.gen_alien(
-            "assets/imgs/alien3.png",
-            screen_shift,
-            alien_shift,
-            offset,
-            (columns, 1),
-            shift=1,
-        )
-
-        self.gen_alien(
-            "assets/imgs/alien2.png",
-            screen_shift,
-            alien_shift,
-            offset,
-            (columns, 2),
-            shift=2,
-        )
-
-        self.gen_alien(
-            "assets/imgs/alien1.png",
-            screen_shift,
-            alien_shift,
-            offset,
-            (columns, 2),
-            shift=4,
-        )
-
-    def gen_alien(
-        self,
-        path: str,
-        screen_shift: Tuple[int, int],
-        alien_shift: Tuple[int, int],
-        offset: Tuple[int, int],
-        size: Tuple[int, int],
-        shift: int = 0,
-    ) -> None:
-        for i in range(0, size[0]):
-            for j in range(shift, size[1] + shift):
-                direction: list[int] = [1, 0]
-                if j % 2 == 1:
-                    direction = [-1, 0]
-
-                self.nodes.append(
-                    AlienEntity(
-                        self,
-                        screen_shift[0] + alien_shift[0] + i * offset[0],
-                        screen_shift[1] + alien_shift[1] + j * offset[1],
-                        30,
-                        30,
-                        path,
-                        2,
-                        rect_mode=const.CORNER,
-                        wrap_mode=const.CLAMP,
-                        speed=(10, 40),
-                        direction=direction,
-                        wait_time=200,
-                    )
-                )
+        self.nodes += self.alien_manager.get_aliens()
 
     def remove_node(self, node: Node) -> None:
         self.nodes.remove(node)
@@ -241,8 +168,9 @@ class PlayScene(Scene):
 
                 are_aliens = True
 
-        # if not are_aliens:
-        #     self.gen_aliens()
+        if not are_aliens:
+            self.alien_manager.gen_aliens()
+            self.nodes += self.alien_manager.get_aliens()
 
     def save_score(self) -> None:
         with open("high_score.txt", "w") as file:
