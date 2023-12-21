@@ -39,13 +39,6 @@ class Renderer:
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.clock = Clock()
 
-        # CAPTION
-        pygame.display.set_caption("Space Invaders - by slymachenko")
-
-        # ICON
-        icon = pygame.image.load("assets/imgs/icon.png")
-        pygame.display.set_icon(icon)
-
     def render(self, *scenes) -> None:
         self.clear_screen()
 
