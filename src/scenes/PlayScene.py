@@ -189,9 +189,18 @@ class PlayScene(Scene):
             self.nodes += self.alien_manager.get_aliens()
 
     def end_game(self) -> None:
-        self.save_score()
+        high_score = self.load_high_score()
+        if self.score > high_score:
+            self.save_score()
         self.updater.switch_scene("MainMenuScene")
 
     def save_score(self) -> None:
         with open("high_score.txt", "w") as file:
             file.write(str(self.score))
+
+    def load_high_score(self) -> int:
+        try:
+            with open("high_score.txt", "r") as file:
+                return int(file.read())
+        except FileNotFoundError:
+            return 0
